@@ -1,0 +1,16 @@
+# 코딩테스트 연습>숨어있는 숫자의 덧셈 (1)
+"""
+문자열 my_string이 매개변수로 주어집니다. 
+my_string안의 모든 자연수들의 합
+
+ 입출력 예
+my_string	    result
+"aAb1B2cC34oOp"	10
+"1a2b3c4d123"	16
+"""
+print(ord('A'))
+print(chr(65))
+#몫과 나머지 구해서 뒤에서부터 잘라내도 되고
+age = 23
+
+print(chr(65+2))

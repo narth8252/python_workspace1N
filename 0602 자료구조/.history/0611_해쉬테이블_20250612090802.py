@@ -1,0 +1,104 @@
+#0611 pm3시 좌충우돌,파이썬으로자료구조 06해시테이블 구현하기
+#https://wikidocs.net/193049
+"""
+해시 테이블은 언어에 따라 해시 맵, 사전 등으로 부른다. 
+해시 테이블은 키(key)와 값(value)으로 구성된 자료 구조로, 
+데이터를 빠르게 검색하고 저장할 수 있다. 
+여기서 중요한 것은 해시 함수다. 
+해시 함수는 입력된 키를 통해 고유한 해시 값을 생성하며, 
+이 값을 이용해 테이블에 값을 저장하거나 검색한다.
+분리연결법이 개방주소법보다 나음
+
+# 해시테이블 개념과 텍스트로 표현한 그림
+크기가 8인 해시테이블이 있고, key에 대해 해시함수로 인덱스계산
+| 인덱스 (Index) | 저장된 값(Value) |
+|----------------|------------------|
+| 0              | apple            |
+| 1              | None             |
+| 2              | orange           |
+| 3              | None             |
+| 4              | banana           |
+| 5              | None             |
+| 6              | None             |
+| 7              | grape            |
+
+# 텍스트로 표현한 해시테이블
+Index | Value
+------+---------
+  0   | apple
+  1   | 
+  2   | orange
+  3   | 
+  4   | banana
+  5   | 
+  6   | 
+  7   | grape
+
+# 해시 충돌이 있는 경우 (예: 체이닝)
+인덱스 2에 여러 값이 저장되는 경우(체이닝) 예시
+Index | Values (Linked List)
+------+----------------------
+  0   | apple
+  1   | 
+  2   | orange -> melon -> kiwi
+  3   | 
+  4   | banana
+  5   | 
+  6   | 
+  7   | grape
+
+# 해시테이블 구조
+
+- 각 인덱스는 버킷(bucket)에 해당하며,  
+- 버킷에는 하나 또는 여러 데이터가 저장됩니다.  
+- 위 예시는 링크드 리스트 사용해 충돌 시 여러 값을 저장하는 방법을 나타냅니다.
+
+---
+
+필요하시면 해시 함수나 충돌 처리 방식 등도 설명해 드릴 수 있습니다. 언제든 문의해 주세요.
+값 ====> 컴퓨터 메모리로 맵핑
+ 맵핑함수 - 해쉬함수: 문자열 → ascii 코드로 만들어서 다 더한후
+                            충돌나면 안되니 수식통해 특정값 나오게 한다음
+                            %키의 전체개수 나머지
+값 => 해쉬함수 ==> 해쉬테이블에 저장(특정메모리로 이동)
+                bucket배열
+                배열만, 배열과 링크드리스트, 링크드리스트로만으로 구성가능
+
+school  ========> 23432%100 32 → bucket[32]
+rain    ========> 33454%100 54 → bucket[54] 
+rainbow ========> 23412%100 12 → bucket[12]
+bucket의 크기는 전체 key값 개수1/2 ~ 1/3
+bucket[100]
+
+collison - 충돌, 배열 bucket[54]  →   →   → 
+"""
+# 1.해쉬함수 만들기
+# school 넣으면 - 각 단어별로 문자의unicode 만들고(파이썬 ord('a')함수), 총합구하기
+"""
+  1.해시테이블 구축하기
+  head[0] → ("school"|??) → (|None)
+  head[1] → ("rain"|??) → (|None)
+  head[2] → ("desk"|??) → ("chair"|?) → (|None)
+  
+"""
+#데이터타입만
+class node:
+  def __init__(self, data=None):
+    self.data = data
+    self.next = None
+
+class HashTable:
+  def __init__(self, cnt=10):
+    self.cnt = 
+    self.bucketList = [None]*cnt
+
+def getHash(key):
+  tptal = 0
+  for k in key:
+    total += ord(k)
+  return total
+
+print( getHash("a"))
+print( getHash("korea"))
+print( getHash("school"))
+#head = [None]*100 100개 만들고 시작하면 됨

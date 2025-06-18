@@ -1,0 +1,172 @@
+250514pm4시. SQL설치
+https://wkdtjsgur100.github.io/mysql-tutorial/
+https://076923.github.io/posts/mysql-1/
+
+cmd창 : ctrl엔터(복사) , 마우스우클릭(붙여넣기) ctrlC/V가 안먹힘
+******************MySQL무료판설치*******************
+https://dev.mysql.com/downloads/mysql/
+1. mysql-8.4.5-winx64.msi 설치(여러버전,유무료있으므로 꼭이걸로!)
+2. 노트에 메모함.
+3.cmd나 AnacodaCmd실행해서 우클릭-관리자실행해서
+4.mysql -u root -p 치고
+5.password:1234 치면
+mysql로 들어간것이면 아래나와야함---------------------------------------------
+(base) C:\Users\Administrator>mysql -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 14
+Server version: 8.4.5 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql>
+----------------------------------------------------------------------------
+안되면  환경변수에 path새로추가해야하고 cmd다시해봐라
+C:\Program Files\MySQL\MySQL Server 8.4\bin
+복사해서 
+시스템속성-환경변수-사용자 변수(U)-Path 편집 -
+mysql -u root -p
+----------------------------------------------------------------------------------
+
+******************워크벤치:(DB를볼수있는)클라이언트설치*******************
+https://dev.mysql.com/downloads/workbench/
+6. 그러고나서 mysql-workbench-community-8.0.42-winx64.msi파일실행
+ 워크벤치는 툴일뿐, DB는 아님.
+7. 다깔리고 열리면 창하단에 MySQL Connections 우클릭 edit.
+8. Connection Name: root (pw:1234)설정 변경. close.
+
+cmd프롬프트창에-------------------------------------------------------------------------
+mysql> exit()
+    -> Ctrl-C
+    ->\h (엑시트안되서 헬프)
+ ->\q (exit)
+
+For server side help, type 'help contents'
+
+    -> \q
+Bye
+
+(base) C:\Users\Administrator> ipconfig #내컴의 ip를확인
+---------------------------------------------------------------------
+Windows IP 구성
+
+
+이더넷 어댑터 이더넷 2:
+
+   연결별 DNS 접미사. . . . :
+   링크-로컬 IPv6 주소 . . . . : fe80::3d6:bd96:6e93:7657%13
+   IPv4 주소 . . . . . . . . . : 192.168.56.1
+   서브넷 마스크 . . . . . . . : 255.255.255.0
+   기본 게이트웨이 . . . . . . :
+
+무선 LAN 어댑터 로컬 영역 연결* 9:
+
+   미디어 상태 . . . . . . . . : 미디어 연결 끊김
+   연결별 DNS 접미사. . . . :
+
+무선 LAN 어댑터 로컬 영역 연결* 10:
+
+   미디어 상태 . . . . . . . . : 미디어 연결 끊김
+   연결별 DNS 접미사. . . . :
+
+무선 LAN 어댑터 Wi-Fi:
+
+   연결별 DNS 접미사. . . . :
+   링크-로컬 IPv6 주소 . . . . : fe80::5b7e:8c56:f1c3:305b%18
+   IPv4 주소 . . . . . . . . . : 172.16.11.106
+   서브넷 마스크 . . . . . . . : 255.255.0.0
+   기본 게이트웨이 . . . . . . : 172.16.0.1
+
+이더넷 어댑터 Bluetooth 네트워크 연결 3:
+
+   미디어 상태 . . . . . . . . : 미디어 연결 끊김
+   연결별 DNS 접미사. . . . :
+
+(base) C:\Users\Administrator>
+--------------------------------------------------------------------
+검색:작업관리자 > 상단:서비스>MySQL84 > 우클릭:중지(연결끊기) or 다시시작(연결하기
+
+(base) C:\Users\Administrator> mysql -u root -p  치면
+서버mysql 찾아서 우클릭(끊기/시작) 하면 cmd창에서 해보면 됐다 에러났다 함.
+
+됐으면 열어보자.
+1. (base) C:\Users\Administrator>mysql -u root -p
+2. mysql> use sakila
+Database changed
+3. mysql> show tables
+    -> ;
++----------------------------+
+| Tables_in_sakila           |
++----------------------------+
+| actor                      |
+| actor_info                 |
+| address                    |
+| category                   |
+| city                       |
+| country                    |
+| customer                   |
+| customer_list              |
+| film                       |
+| film_actor                 |
+| film_category              |
+| film_list                  |
+| film_text                  |
+| inventory                  |
+| language                   |
+| nicer_but_slower_film_list |
+| payment                    |
+| rental                     |
+| sales_by_film_category     |
+| sales_by_store             |
+| staff                      |
+| staff_list                 |
+| store                      |
++----------------------------+
+23 rows in set (0.01 sec)
+
+mysql>
+
+*0516.***********************************************************
+챗GPT: msql emp dept samle 파일줘 > sql 파일로 줘 하면 emp_dept_sample.sql 파일 다운로드 링크줌. 받아서 폴더확인
+챗GPT:  mysql 데이터 복원 치면 알려줌
+워크벤치도 되지만 리눅스나 AWS, 그래픽지원이 안돼서 콘솔창(cmd)에서 해야해서 이 방법 알아야함.
+
+cmd 관리자권한실행 > mysql -u root -p mydb < emp_dept_sample.sql
+-------------------------------------------------------------------------------------------
+(base) C:\Users\Administrator>mysql -u [user01] -p [emp_dept_sample.sql] < [C:\Downloads]
+파일 이름, 디렉터리 이름 또는 볼륨 레이블 구문이 잘못되었습니다.
+
+(base) C:\Users\Administrator>cd C:\Downloads
+
+(base) C:\Downloads>mysql -u root -p mydb < emp_dept_sample.sqll(내가받은파일명)
+Enter password: 1234
+mysql> use mydb;
+mysql> show tables;
+
+mysql로 들어간것이면 아래나와야함---------------------------------------------
+(base) C:\Downloads>mysql -u root -p
+Enter password: 1234
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use mydb;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_mydb |
++----------------+
+| dept           |
+| emp            |
++----------------+
+2 rows in set (0.01 sec)
+
+mysql>
+----------------------------------------------------------------------------------------
+
+

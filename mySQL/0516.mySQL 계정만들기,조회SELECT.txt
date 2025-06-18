@@ -1,0 +1,285 @@
+*0516.***********************************************************
+챗GPT: msql emp dept samle 파일줘 > sql 파일로 줘 하면 emp_dept_sample.sql 파일 다운로드 링크줌. 받아서 폴더확인
+챗GPT:  mysql 데이터 복원 치면 알려줌
+*워크벤치도 되지만 리눅스나 AWS, 그래픽지원이 안돼서 콘솔창(cmd)에서 해야해서 이 방법 알아야함.
+
+**띄어쓰기 잘보고 꼭 해야함
+**엔터키 쳤는데 뭐라고 잔소리하고 안되면 맨끝에  ; 쳐줘
+**만드는건 creator
+**지우는건 drop
+**복사는 ctrl엔터, 붙여넣기는 마우스우클릭
+**dbns(프로그램을 말하는것임):오라클, mySQL, 등등
+
+use sakila;
+show tables;
+#mysql - u root -p 디비명>...sql 백업
+#mysql - u root -p 디비명< /경로/사킬라/sakila-schema.sql
+#mysql - u root -p 디비명< /경로/사킬라/sakila-data.sql
+
+cmd 관리자권한실행 > mysql -u root -p mydb < emp_dept_sample.sql
+-------------------------------------------------------------------------------------------
+(base) C:\Users\Administrator>mysql -u [user01] -p [emp_dept_sample.sql] < [C:\Downloads]
+파일 이름, 디렉터리 이름 또는 볼륨 레이블 구문이 잘못되었습니다.
+
+(base) C:\Users\Administrator>cd C:\Downloads
+
+(base) C:\Downloads>mysql -u root -p mydb < emp_dept_sample.sqll(내가받은파일명)
+Enter password: 1234
+mysql> use mydb;
+mysql> show tables;
+
+mysql로 들어간것이면 아래나와야함---------------------------------------------
+(base) C:\Downloads>mysql -u root -p
+Enter password: 1234
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use mydb;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_mydb |
++----------------+
+| dept           |
+| emp            |
++----------------+
+2 rows in set (0.01 sec)
+
+mysql>
+----------------------------------------------------------------------------------------
+
+새 계정만들기
+1. 기본적으로 mySQL은 
+2. 로컬에서만 가능하다는말은 DB서버 MySQL84)와
+3. DB클라이언트(mysql, workbench, dbeavor, sqlgate, heidsql..)
+동일컴퓨터에 존재할때 접근가능함을 말한다
+4. 클라이언트가 다른 컴퓨터에 있을때 접근가능한 계정을별도로 만들어줘야한다
+5. 실무에서는 보통 phpmyadmin이라는 웹사이트를 설치해 이사이트를 통해접근
+로컬접근 계정만들기
+6. create user '계정명'@'localhost' identified by '패스워드';
+예)CREATE USER 'user01'@'localhost' IDENTIFIED BY '1234';
+
+7. root(우리가 만든폴더같은개념의 이름)계정이 생성된 사용자계정에게 DB에 접근권한을 부여해야 특정DB에 접근권한생감
+grant all privillages on mydb.* to user01@localhost
+
+-- 사용자 생성
+CREATE USER 'user01'@'localhost' IDENTIFIED BY '1234';
+
+-- 권한 부여
+GRANT ALL PRIVILEGES ON *.* TO 'user01'@'localhost' WITH GRANT OPTION;
+
+-- 권한 적용
+FLUSH PRIVILEGES;
+
+-이제 user01로 localhost에서 로그인 가능하며 모든 권한을 가진다.
+원하는 권한 범위가 더 제한적이면 말해줘. 필요한 범위만 설정해주는 방법도 알려줄 수 있다.
+-사용자 생성이나 권한 부여까지 끝났다면 exit 명령어로 MySQL에서 안전하게 빠져나오면 돼. 입력하면 MySQL 프롬프트(mysql>)에서 빠져나가서 터미널 쉘로 돌아온다.
+--------전체 흐름 예시: cmd관리자권한실행
+ mysql -u root -p
+Enter password: ****
+
+mysql> CREATE USER 'user01'@'localhost' IDENTIFIED BY '1234';
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'user01'@'localhost' WITH GRANT OPTION;
+mysql> FLUSH PRIVILEGES;
+mysql> exit
+Bye
+--------------------------------------------------------------------------
+mysql> CREATE USER 'user01'@'localhost' IDENTIFIED BY '1234';
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'user01'@'localhost' WITH GRANT OPTION;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> exit
+Bye
+
+(base) C:\Downloads>mysql -u user01 -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 8.4.5 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use mydb;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_mydb |
++----------------+
+| dept           |
+| emp            |
++----------------+
+2 rows in set (0.00 sec)
+
+mysql>
+-------------------------------------------------------------------------
+
+***테이블 구조를 확인하는 명령어
+desc 테이블명;
+desc emp;
+desc dept;
+
+---------desc dept; (부서정보 테이블)------------------------------------------------
+mysql> desc dept;
+
+-테이블 보는 법
+열을 필드라고 함.
+각행(Row)는 부서, deptno는 고유식별자(기본키), dname, loc은 부서이름과 위치
+Type 데이터타입이 존재(small, int, bigint,..
+varchr, char, text
+
+char(100)이라고 하고 1글자만쓰면 나머지99열을 공백으로 채워서 100byte을다씀
+성별,학번,주민번호,우편번호 등 길이가 정해져있는 변하지않는 것만 쓴다.
+varchr (max.65535byte)한글은1글자면끝남.
+text (max.2GB) 게시판같은 1000자이상의 긴글의 경우엔 text로., longtext는max.4GB임
+
+chr - 고정길이 문자열(max.255문자)(ex.성별,학번,주민번호,우편번호,연도,사번,)
+    gender chr(10)   gender='Y'
+    y - - - - - - - - - -10개의 메모리를 다 차지
+    where gender= 'y'
+    where gender='Y' 
+       dbms(프로그램)마다 다른데 대부분 데이터에한해 대소문자구분하는데, mySQL은 못함.
+       오라클의 경우 where gender='y' 또는 where trip(gender)='y'
+       데이터길이가 정해져있을때 사용(사번,학번,성별,연도,)
+
+varchar(바차) - variant char의 약자
+     가변길이 문자열, 용량지정해도 실제데이터만큼만 사용
+     varchar(100) 'y' 가 들어가면 실제데이터길이 1만 차지
+     상황에맞춰 ID, 게시판title,..
+text, long text - 게시판의 긴글
+Null - 널 허용여부
+
+아래 테이블을 보고 읽어낼줄 알아야함.
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+부서번호  정수      반드시값 기본키(
+| deptno | int         | NO   | PRI | NULL    |       |
+| dname  | varchar(50) | YES  |     | NULL    |       |
+| loc    | varchar(50) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+---------------------------------------------------------
+1. deptno (부서 번호) 👉 이 필드는 부서의 고유 번호로 중복되면 안 되고, 필수 입력이다.
+항목	설명
+Type	int: 정수형 (4 bytes)
+Null	NO: 반드시 값 있어야 함 (NOT NULL)
+Key	PRI: Primary Key (기본 키, 중복 불가)
+Default	없음 (NULL이라 표기됐지만 실제로는 기본값 없음)
+Extra	비어 있음 (자동 증가 같은 옵션 없음)
+
+2. dname (부서 이름) 👉 부서 이름은 예: 'ACCOUNTING', 'RESEARCH' 같은 데이터가 들어감.
+입력 안 해도 되지만, 실무에선 거의 항상 채워짐.
+항목	설명
+Type	varchar(50): 가변 길이 문자열, 최대 50자
+Null	YES: NULL 값 허용 (입력 안 해도 됨)
+Key	없음 (검색 인덱스 아님)
+Default	NULL
+Extra	없음
+
+3. loc (부서 위치)👉 예: 'NEW YORK', 'DALLAS' 같은 값이 들어가며, 없어도 무방함.
+항목	설명
+Type	varchar(50)
+Null	YES: NULL 허용
+Key	없음
+Default	NULL
+Extra	없음
+
+-------desc emp; (테이블명:직원)-------------------------------------------------------------
+** DCL, DML, DDL
+** DCL : Data Control Language
+            grant(권한주는 명령어), revoke(권한뺏는명령어)
+**DML : Data Manipuluion Language 조작어
+            insert, delete, update, select(조회)-애매함
+**DDL : Data Definition Language
+          정의 create, drop, alter, truncate,...
+**조회명령어인 select 사용법
+1. SELECT 기본 구조
+SELECT 컬럼명1, 컬럼명2, ...
+FROM 테이블명
+WHERE 조건
+ORDER BY 정렬기준
+GROUP BY 그룹기준
+HAVING 그룹조건
+LIMIT 제한개수;
+
+2. 기본조회 (emp 테이블 전체행과 열 조회)
+SELECT * FROM emp; 
+3. 특정 열만 조회
+SELECT ename, job FROM emp;
+4. 조건 조회 (WHERE)
+SELECT * FROM emp
+WHERE deptno = 20 AND sal > 2000;
+5. 정렬 (ORDER BY)
+SELECT ename, sal FROM emp
+ORDER BY sal DESC;
+5. 중복 제거 (DISTINCT)
+SELECT DISTINCT job FROM emp;
+6. 별칭 (AS) 생략가능, 테이블이름변경
+SELECT ename AS 이름, sal AS 급여 FROM emp;
+7. 계산식 사용
+SELECT ename, sal, sal * 12 AS 연봉 FROM emp;
+8. 집계 함수 (GROUP BY)
+SELECT deptno, AVG(sal) AS 평균급여
+FROM emp
+GROUP BY deptno;
+9. HAVING (그룹 조건)
+SELECT deptno, COUNT(*) AS 인원
+FROM emp
+GROUP BY deptno
+HAVING COUNT(*) >= 3;
+10. LIMIT (조회 행 제한)
+SELECT * FROM emp LIMIT 5;
+
++----------+---------------+------+-----+---------+-------+
+| Field    | Type          | Null | Key | Default | Extra |
++----------+---------------+------+-----+---------+-------+
+| empno    | int           | NO   | PRI | NULL    |       |
+| ename    | varchar(50)   | YES  |     | NULL    |       |
+| job      | varchar(50)   | YES  |     | NULL    |       |
+| mgr      | int           | YES  |     | NULL    |       |
+| hiredate | date          | YES  |     | NULL    |       |
+| sal      | decimal(10,2) | YES  |     | NULL    |       |
+| comm     | decimal(10,2) | YES  |     | NULL    |       |
+| deptno   | int           | YES  | MUL | NULL    |       |
++----------+---------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+
+🔍 emp 테이블 필드 설명
+Field	설명
+empno	직원 번호 – 기본키, 고유 식별자
+ename	직원 이름
+job	직무명 (예: MANAGER, CLERK)
+mgr	상사의 직원번호 (empno) – 자기 참조 구조
+hiredate	입사일
+sal	급여 (급여는 소수점 포함 decimal(10,2))
+comm	커미션 (보너스 개념)
+deptno	부서 번호 – dept 테이블과 연결되는 외래키 (MUL: 여러 값 검색시 효율적)
+
+✅ 주요 키 설명
+Key	의미
+PRI	Primary Key (고유 식별자)
+MUL	외래키 또는 다중 인덱스 가능 항목 (Foreign Key 관계로 자주 JOIN될 수 있음)
+
+✅ 예시 데이터
+empno	ename	job	mgr	hiredate	sal	comm	deptno
+7369	SMITH	CLERK	7902	1980-12-17	800.00	NULL	20
+7499	ALLEN	SALESMAN	7698	1981-02-20	1600.00	300.00	30
+
+✅ 현실적 관계 요약
+한 명의 직원(emp)은 하나의 부서(dept)에 소속됨
+emp.deptno → dept.deptno
+
+한 명의 직원은 다른 직원에게 보고할 수 있음
+mgr 필드 → empno (자기 자신을 참조)

@@ -1,0 +1,42 @@
+windows PowerShell 우클릭 관리자권한실행
+# 콘다 파워쉘 이니셜라이징
+conda init powershell
+
+# 파워쉘 권한 변경(파워쉘에서만 입력가능)
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
+
+#Y 예
+
+#껏다키고 
+conda activate base
+--------------------------------------------------------------------
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+새로운 기능 및 개선 사항에 대 한 최신 PowerShell을 설치 하세요! https://aka.ms/PSWindows
+
+개인 및 시스템 프로필을 로드하는 데 3527ms가 걸렸습니다.
+(base) PS C:\Users\Administrator> conda activate base
+(base) PS C:\Users\Administrator>
+----------------------------------------------------------------------
+(base) PS C:\Users\Administrator> conda create --name myenv1
+Retrieving notices: done
+WARNING: A conda environment already exists at 'C:\ProgramData\anaconda3\envs\myenv1'
+
+Remove existing environment?
+This will remove ALL directories contained within this specified prefix directory, including any other conda environments.
+
+ (y/[n])? n
+
+
+CondaSystemExit: Exiting.
+-----------------------------------------------------------------------------------------
+(base) PS C:\Users\Administrator> conda activate myenv1
+(myenv1) PS C:\Users\Administrator> pip install pymysql
+Collecting pymysql
+  Downloading PyMySQL-1.1.1-py3-none-any.whl.metadata (4.4 kB)
+Downloading PyMySQL-1.1.1-py3-none-any.whl (44 kB)
+Installing collected packages: pymysql
+Successfully installed pymysql-1.1.1
+----------------------------------------------------------------------------------------
+(myenv1) PS C:\Users\Administrator>

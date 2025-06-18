@@ -1,0 +1,124 @@
+*0516.***********************************************************
+챗GPT: msql emp dept samle 파일줘 > sql 파일로 줘 하면 emp_dept_sample.sql 파일 다운로드 링크줌. 받아서 폴더확인
+챗GPT:  mysql 데이터 복원 치면 알려줌
+*워크벤치도 되지만 리눅스나 AWS, 그래픽지원이 안돼서 콘솔창(cmd)에서 해야해서 이 방법 알아야함.
+
+**띄어쓰기 잘보고 꼭 해야함
+**엔터키 쳤는데 뭐라고 잔소리하고 안되면 맨끝에  ; 쳐줘
+**만드는건 creator
+**지우는건 drop
+**복사는 ctrl엔터, 붙여넣기는 마우스우클릭
+
+cmd 관리자권한실행 > mysql -u root -p mydb < emp_dept_sample.sql
+-------------------------------------------------------------------------------------------
+(base) C:\Users\Administrator>mysql -u [user01] -p [emp_dept_sample.sql] < [C:\Downloads]
+파일 이름, 디렉터리 이름 또는 볼륨 레이블 구문이 잘못되었습니다.
+
+(base) C:\Users\Administrator>cd C:\Downloads
+
+(base) C:\Downloads>mysql -u root -p mydb < emp_dept_sample.sqll(내가받은파일명)
+Enter password: 1234
+mysql> use mydb;
+mysql> show tables;
+
+mysql로 들어간것이면 아래나와야함---------------------------------------------
+(base) C:\Downloads>mysql -u root -p
+Enter password: 1234
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use mydb;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_mydb |
++----------------+
+| dept           |
+| emp            |
++----------------+
+2 rows in set (0.01 sec)
+
+mysql>
+----------------------------------------------------------------------------------------
+
+새 계정만들기
+1. 기본적으로 mySQL은 
+2. 로컬에서만 가능하다는말은 DB서버 MySQL84)와
+3. DB클라이언트(mysql, workbench, dbeavor, sqlgate, heidsql..)
+동일컴퓨터에 존재할때 접근가능함을 말한다
+4. 클라이언트가 다른 컴퓨터에 있을때 접근가능한 계정을별도로 만들어줘야한다
+5. 실무에서는 보통 phpmyadmin이라는 웹사이트를 설치해 이사이트를 통해접근
+로컬접근 계정만들기
+6. create user '계정명'@'localhost' identified by '패스워드';
+예)CREATE USER 'user01'@'localhost' IDENTIFIED BY '1234';
+Query OK, 0 rows affected (0.01 sec)
+
+6-1.삭제하려면,, 홈에서 우클릭
+mysql> DROP USER 'user01'@'localhost';
+Query OK, 0 rows affected (0.01 sec)
+
+7. root(우리가 만든폴더같은개념의 이름)계정이 생성된 사용자계정에게 DB에 접근권한을 부여해야 특정DB에 접근권한생감
+mysql> grant all privileges on mydb.* to user01@localhost;
+Query OK, 0 rows affected (0.01 sec)
+
+-- 사용자 생성
+CREATE USER 'user01'@'localhost' IDENTIFIED BY '1234';
+
+-- 권한 부여
+GRANT ALL PRIVILEGES ON *.* TO 'user01'@'localhost' WITH GRANT OPTION;
+
+-- 권한 적용
+FLUSH PRIVILEGES;
+
+-이제 user01로 localhost에서 로그인 가능하며 모든 권한을 가진다.
+원하는 권한 범위가 더 제한적이면 말해줘. 필요한 범위만 설정해주는 방법도 알려줄 수 있다.
+-사용자 생성이나 권한 부여까지 끝났다면 exit 명령어로 MySQL에서 안전하게 빠져나오면 돼. 입력하면 MySQL 프롬프트(mysql>)에서 빠져나가서 터미널 쉘로 돌아온다.
+--------전체 흐름 예시: cmd관리자권한실행
+ mysql -u root -p
+Enter password: ****
+
+mysql> CREATE USER 'user01'@'localhost' IDENTIFIED BY '1234';
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'user01'@'localhost' WITH GRANT OPTION;
+mysql> FLUSH PRIVILEGES;
+mysql> exit
+Bye
+--------------------------------------------------------------------------
+mysql> CREATE USER 'user01'@'localhost' IDENTIFIED BY '1234';
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'user01'@'localhost' WITH GRANT OPTION;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> exit
+Bye
+
+(base) C:\Downloads>mysql -u user01 -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 8.4.5 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use mydb;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_mydb |
++----------------+
+| dept           |
+| emp            |
++----------------+
+2 rows in set (0.00 sec)
+
+mysql>
+-------------------------------------------------------------------------

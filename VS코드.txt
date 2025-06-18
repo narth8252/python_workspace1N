@@ -1,0 +1,121 @@
+쌤 교재 검색어 " ㅇㅇㅇ tutorial "
+교채추천: 두잇출판사(얇고쌩초보추천), 일본저자 잘씀, 한빛출판사(무난함)
+교재비추: 최병준(사전식으로 나열), 미국저자 소설처럼써서 장황함
+웹프론트엔드> 자바스크립트,html https://www.w3schools.com/
+                     모던 JavaScript 튜토리얼 https://ko.javascript.info/
+백엔드> 웹서버 - 점프 투 장고 https://wikidocs.net/book/4223
+웹배우고 크롤링
+
+[ VS Code(Visual Studio Code) 단축키 ]
+프롬프트창에 에러뜨면 ctrl+파일명 클릭하면 에러코드줄로 바로이동
+명령 팔레트(Ctrl+Shift+P)에서 “Keyboard Shortcuts”에서  단축키설정
+파일명 앞에 숫자X, 공백대신_
+     ###기본 탐색 및 편집 단축키
+Fn + shift + 화살표 : 줄전체선택 
+Ctrl + P  파일 열기/찾기 → 파일 이름을 빠르게 검색하여 열기
+Ctrl + Shift + P 명령 팔레트(Command Palette) 열기 → VS Code 내 다양한 명령어 검색 및 실행
+(View → Command Palette... 클릭)
+
+Ctrl + G 빠른 줄 이동 → 특정 줄 번호로 바로 이동
+Shift + Alt + ↓↑한 줄 복사 → 현재 줄을 아래나 위로 복사
+Alt + ↓↑ 줄 이동 → 현재 줄을 아래나 위로 이동
+Ctrl + Shift + K 한 줄 삭제
+ ### 편집강화 단축키
+Ctrl + Space 자동완성제안
+Ctrl + Alt + ↓↑ 다중커서추가  → 여러줄에 동시에 커서추가
+Ctrl + F2 모든 동일 단어 선택 → 현재커서 위치단어 전체선택 및 동시편집
+Ctrl + / 현재줄 주석 토글
+Shift + Alt + A 블록 주석 토글
+    ### 창 및 패널 관리
+Ctrl + `` (백틱) 터미널 열기/닫기
+Ctrl + B 사이드바 탐색기 열기/닫기
+Ctrl + 0 (숫자) 파일 사이드바로 포커스 이동
+Ctrl + Tab 탭 간 전환
+    ### 검색
+Ctrl + Shift + F 프로젝트내 검색
+Ctrl + F 현재파일내 검색**  
+Ctrl + H 찾은 결과 바꾸기
+Ctrl + C 취소 : 프롬프트창에서 
+settings.json파일에 전체붙여넣기 
+C:\Users\Administrator\AppData\Roaming\Code\User\settings.json
+# Ctrl+Shift+P 명령팔레트 실행 > settings 입력 > “Preferences: Open User Settings (JSON)” 선택
+# 또는 메뉴→파일>기본설정>설정 또는 Ctrl+, 단축키
+# 오른쪽 상단 {} 아이콘 클릭 → settings.json 편집기 열림
+# → 사용자 전역 설정용 settings.json 열림
+
+settings.json 수정문구 참고
+"editor.autoClosingBrackets": "beforeWhitespace" 괄호닫기: 커서가 공백 앞일 때만 자동으로 닫음
+"editor.autoClosingQuotes": "always"  따옴표자동닫기: 항상
+"never"	           자동으로 닫지 않음 (직접 " " 양쪽 다 입력해야 함)
+"languageDefined"  사용하는 언어 설정에 따라 다르게 동작
+
+
+ 글로벌 스니펫 요약 목록
+VS Code: Ctrl + Shift + P → Preferences: Configure User Snippets → New Global Snippets file
+예: python-kit.code-snippets → 붙여넣고 저장
+사용 예시
+pvar + [Tab]  →  print("변수이름 =", 변수이름) 자동완성
+defx + [Tab]  →  def 함수명(매개변수):
+                   본문
+👉 탭 누르면 $1, $2, $3 위치로 커서 자동 점프됨.
+VS코딩 템플릿(Snippet).py
+
+| prefix         | 내용 설명                      |
+| -------------- | -------------------------- |
+| `pvar`         | 변수명과 값 함께 출력               |
+| `defx`         | 함수 템플릿                     |
+| `forx`         | 기본 for 루프                  |
+| `ifx`, `elifx` | 조건문 패턴                     |
+| `tryx`         | try-except 구조              |
+| `listx`        | 리스트 컴프리헨션                  |
+| `rfile`        | 파일 한 줄씩 읽기 (`read`)        |
+| `wfile`        | 파일 쓰기 (`write`)            |
+| `dictx`        | 딕셔너리 순회                    |
+| `inputx`       | input(), split(), map 처리   |
+| `sortx`        | 리스트 정렬 (key, reverse 포함)   |
+| `lambx`        | 람다 함수                      |
+| `dtnow`        | 현재 날짜시간 구하기                |
+| `enumx`        | enumerate() 루프             |
+| `setx`         | 리스트를 set으로 변환              |
+| `ddictx`       | collections.defaultdict 사용 |
+
+
+[VS코드> open Folder시 열려있던 파일들 초기화되는 문제]
+1. VS코드에서 폴더 열기(Open Folder) 동작 이해
+VS코드는 기본적으로 한 번에 **하나의 폴더(workspace)**만 열 수 있습니다.
+2. 이전에 열었던 폴더 및 파일로 돌아가는 방법
+(1) 최근 폴더 및 파일 열기
+파일(File) → 열기최근작업(ReopenRecent) : 이전에 작업하던 폴더 또는 파일을 선택
+(2) 작업 영역(Workspace) 기능 활용
+여러 폴더를 동시에 작업하려면, 작업 영역(.code-workspace)을 만들어 사용할 수 있습니다.
+작업영역에 여러폴더 추가해서 단일환경에서 관리가능, 열려있던 파일상태도 유지
+단점   	설명
+파일관리	.code-workspace 파일을 별도 관리해야 함
+복잡성	단일 폴더보다 설정 및 관리가 복잡함
+설정충돌	확장 프로그램 및 설정 간 충돌 가능성
+성능문제	대규모 폴더 추가 시 메모리 부담 및 느려짐
+기능호환	일부 확장이나 기능과의 호환성 문제 가능
+필요 시 작업 영역 설정의 장점과 활용 팁
+(3) 창 새로열기(New Window)
+새창에서 폴더열기 하면, 기존창은 그대로 둔채 새로운창에서 다른폴더 열수 있습니다.
+파일 → 새 창(New Window) → 폴더열기 → 작업수행 후 다시 원래창으로 돌아감.
+3. VS코드 설정에서 편리한 파일 복원 방법
+설정 "window.restoreWindows": "all" , VS코드 종료하고 다시열때 이전창과 열린파일들을 복원
+폴더를 닫았다가 다시 열때 이전 작업상태를 유지.
+4. 요약
+폴더를 열면서 기존 열린 파일 사라짐	최근 작업 파일/폴더 메뉴 활용
+여러 폴더 동시에 작업	                        작업 영역(workspace) 기능 활용
+별도 창에서 폴더 열기                  	새 창에서 폴더 열기 기능 사용
+VS코드 종료 후 열린 파일 복원       	window.restoreWindows 설정 활성화
+
+
+[ 코랩단축키>상단좌측 O명령어 (도구>단축키(Ctrl+M+H) ]
+셀 렌더링 Shift+엔터
+셀추가 Ctrl+엔터
+다음셀 Alt+엔터
+셀복제 Ctrl+M+D
+주석달기 Ctrl+/
+자동완성tab
+텍스트 교체 ctrl +shft+p
+
+

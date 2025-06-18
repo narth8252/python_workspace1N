@@ -1,0 +1,1 @@
+f = open("score.txt", "r", encording='utf-8')

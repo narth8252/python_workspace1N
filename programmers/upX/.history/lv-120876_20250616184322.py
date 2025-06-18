@@ -1,0 +1,35 @@
+# 코딩테스트 연습>겹치는 선분의 길이
+
+# '2' -> int
+""" 
+우주여행을 하던 머쓱이는 엔진 고장으로 PROGRAMMERS-962 행성에 불시착하게 됐습니다.
+입국심사에서 나이를 말해야 하는데, PROGRAMMERS-962 행성에서는 
+나이를 알파벳으로 말하고 있습니다. 
+a는 0, b는 1, c는 2, ..., j는 9입니다. 
+예를 들어 23살은 cd, 51살은 fb로 표현합니다.
+나이 age가 매개변수로 주어질 때 PROGRAMMER-962식 나이
+"""
+# (chr(65)) #A, (chr(65+2)) #B,  (chr(65+3)) #C
+age = 2345
+answer = ""
+for i in str(age):
+    answer += chr(ord('A')+int(i)) #소문자로 바꾸고싶으면 a로 하면 됨.
+print(ord('A'))
+
+
+
+
+
+
+
+# def solution(age):
+#     answer = ''
+#     for ch in age:
+#         answer += (ord(ch) - ord('a'))
+#     return int(answer)
+
+# def solution(age):
+#     result = ''
+#     for digit in str(age):
+#         result += chr(ord('a') + int(digit))
+#     return result
