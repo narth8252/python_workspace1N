@@ -1,0 +1,90 @@
+<!-- 250626 pm3시 쌤ppt159p
+예제 https://api.jquery.com/animate/
+ 커스터머 안에 있음.
+https://www.w3schools.com/jquery/jquery_animate.asp
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script> 
+$(document).ready(function(){
+  $("#flip").click(function(){
+    $("#panel").slideDown("slow",()=>{$("#panel").slideUp("slow");
+    }) //Fade 클릭시 설명칸이 내려갔다올라가게 함.
+  });
+});
+$(document).ready(function(){
+  $("button").click(function(){
+    $("div").animate({left: '250px', bottom:'-200px'});
+  }); //Animate 상자 아래로 사라짐 애니메이션효과
+});
+$(document).ready(function () {
+  $("button").click(function () {
+    $("div").animate(
+      {
+        left: '250px',
+        opacity: '0.5',
+        height: '150px',
+        width: '150px'
+      },
+      1000, // 애니메이션 지속 시간 (1초)
+      function () {
+        alert("🎉 축하합니다!");
+      }
+    );
+  });
+});
+</script>
+<script> //jQuery chaining
+$(document).ready(function(){
+  $("button").click(function(){
+    $("#p1").css("color", "red")
+      .slideUp(2000)
+      .slideDown(2000);
+  });
+});
+</script>
+</head>
+<body>
+
+<p id="p1">jQuery is fun!!</p>
+
+<button>Click me</button>
+
+<style> 
+#panel, #flip {
+  padding: 5px;
+  text-align: center;
+  background-color: #e5eecc;
+  border: solid 1px #c3c3c3;
+}
+
+#panel {
+  padding: 50px;
+  display: none;
+}
+</style>
+</head>
+<body>
+ 
+<div id="flip">Click to slide down panel</div>
+<div id="panel">Hello world!</div>
+
+</head>
+<body>
+    <script>
+        $(document).ready(()=>{
+            //alert("window.onload대신쓴다")
+            $("#ptag").click(()=>{
+                alert("이벤트핸들러");
+            })
+        })
+    </script>
+    <p id="ptag">눌러보세요</p>
+</body>
+</html>

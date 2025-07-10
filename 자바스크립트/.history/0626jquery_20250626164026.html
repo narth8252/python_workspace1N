@@ -1,0 +1,103 @@
+<!-- 250626 pm3시 쌤ppt159p
+예제 https://api.jquery.com/animate/
+ 커스터머 안에 있음.
+https://www.w3schools.com/jquery/jquery_animate.asp
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        #panel, #flip {
+            padding: 5px;
+            text-align: center;
+            background-color: #e5eecc;
+            border: solid 1px #c3c3c3;
+        }
+        #panel {
+            padding: 50px;
+            display: none;
+        }
+    </style>
+    <script>
+    $(document).ready(function(){
+        // Fade
+        $("#flip").click(function(){
+            $("#panel").slideDown("slow", function(){
+                $("#panel").slideUp("slow");
+            });
+        });
+
+        // Animate
+        $("button#animateBtn").click(function(){
+            $("div.animDiv").animate({left: '250px', bottom:'-200px'});
+        });
+
+        $("button#alertBtn").click(function () {
+            $("div.animDiv").animate(
+                {
+                    left: '250px',
+                    opacity: '0.5',
+                    height: '150px',
+                    width: '150px'
+                },
+                1000,
+                function () {
+                    alert("🎉 축하합니다!");
+                }
+            );
+        });
+
+        // jQuery chaining
+        $("button#chainBtn").click(function(){
+            $("#p1").css("color", "red")
+                .slideUp(2000)
+                .slideDown(2000);
+        });
+
+        // 테이블 행 추가
+        $("#addRowBtn").click(function(){
+            $("#myTable").append("<tr><td>홍길동</td><td>20</td></tr>");
+        });
+
+        // 테이블 열 추가
+        $("#addColBtn").click(function(){
+            // 헤더에 열 추가
+            $("#myTable tr:first").append("<th>추가열</th>");
+            // 데이터 행에 열 추가
+            $("#myTable tr:not(:first)").append("<td>새 데이터</td>");
+        });
+
+        // ptag 클릭 이벤트
+        $("#ptag").click(function(){
+            alert("이벤트핸들러");
+        });
+    });
+    </script>
+</head>
+<body>
+    <p id="p1">jQuery is fun!!</p>
+    <button id="chainBtn">Click me (체이닝)</button>
+    <br><br>
+    <div id="flip">Click to slide down panel</div>
+    <div id="panel">Hello world!</div>
+    <br>
+    <div class="animDiv" style="width:100px;height:100px;background:red;position:relative;"></div>
+    <button id="animateBtn">애니메이션</button>
+    <button id="alertBtn">애니메이션+알림</button>
+    <br><br>
+    <table id="myTable" border="1">
+        <tr>
+            <th>이름</th>
+            <th>나이</th>
+        </tr>
+    </table>
+    <button id="addRowBtn">행 추가</button>
+    <br><br>
+    <p id="ptag">눌러보세요</p>
+</body>
+</html>

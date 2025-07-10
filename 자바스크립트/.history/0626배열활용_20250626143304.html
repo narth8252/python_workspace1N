@@ -1,0 +1,53 @@
+<!-- 250626 pm2시 쌤ppt.153p.name속성 154p.id속성활용 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Document</title>
+</head>
+<body>
+  <h2>input 배열 사용하기</h2>
+
+  <!-- id로도, name으로도 접근 가능하게 -->
+  <input type="text" name="numbers" id="numbers1" value="1"><br>
+  <input type="text" name="numbers" id="numbers2" value="2"><br>
+  <input type="text" name="numbers" id="numbers3" value="3"><br>
+  <input type="text" name="numbers" id="numbers4" value="4"><br>
+  <input type="text" name="numbers" id="numbers5" value="5"><br>
+  <input type="text" name="numbers" id="numbers6" value="6"><br>
+  <input type="text" name="numbers" id="numbers7" value="7"><br>
+  <input type="text" name="numbers" id="numbers8" value="8"><br>
+  <input type="text" name="numbers" id="numbers9" value="9"><br>
+  <input type="text" name="numbers" id="numbers10" value="10"><br>
+
+  <div id="result" style="background-color: lightgray;width:170px;height:20px"></div>
+
+  <button type="button" id="btnAdd1">더하기1(name접근)</button>
+  <button type="button" id="btnAdd2">더하기2(id접근)</button>
+
+  <script>
+    window.onload = () => {
+      // name 접근
+      document.querySelector("#btnAdd1").addEventListener("click", () => {
+        const inputs = document.getElementsByName("numbers");
+        let s = 0;
+        for (let i = 0; i < inputs.length; i++) {
+          s += parseInt(inputs[i].value);
+        }
+        document.querySelector("#result").innerHTML = s;
+      });
+
+      // id 접근
+      document.querySelector("#btnAdd2").addEventListener("click", () => {
+        let s = 0;
+        for (let i = 1; i <= 10; i++) {
+          const input = document.getElementById("numbers" + i);
+          s += parseInt(input.value);
+        }
+        document.querySelector("#result").innerHTML = s;
+      });
+    };
+  </script>
+</body>
+</html>

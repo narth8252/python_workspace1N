@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Document</title>
+</head>
+<body>
+
+  <button id="btnAdd">추가</button>
+  <button id="btnDelete">삭제</button>
+
+  <table border="1" style="width:70%">
+    <thead>
+      <tr>
+        <th>품목</th>
+        <th>수량</th>
+        <th>가격</th>
+      </tr>
+    </thead>
+    <tbody id="tbody">
+      <tr>
+        <td><input type="text" name="product_name"></td>
+        <td><input type="text" name="product_price"></td>
+        <td><input type="text" name="product_count"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script>
+    window.onload = function () {
+      document.getElementById("btnAdd").addEventListener("click", funAdd);
+      document.getElementById("btnDelete").addEventListener("click", funDel);
+    };
+
+    function funAdd() {
+      const tbody = document.getElementById("tbody");
+      const row = tbody.insertRow(); // 하단에 추가
+      const cell1 = row.insertCell(0);
+      const cell2 = row.insertCell(1);
+      const cell3 = row.insertCell(2);
+
+      cell1.innerHTML = '<input type="text" name="product_name">';
+      cell2.innerHTML = '<input type="text" name="product_price">';
+      cell3.innerHTML = '<input type="text" name="product_count">';
+    }
+
+    function funDel() {
+      const tbody = document.getElementById("tbody");
+      if (tbody.rows.length > 1) {
+        tbody.deleteRow(tbody.rows.length - 1); // 맨 끝 삭제
+      } else {
+        alert("더 이상 삭제할 수 없습니다.");
+      }
+    }
+  </script>
+</body>
+</html>
+
+<!-- 250626 pm1시 쌤PPT148p.테이블셀추가삭제 -->

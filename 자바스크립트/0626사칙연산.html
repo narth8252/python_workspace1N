@@ -1,0 +1,33 @@
+<!-- 
+250626 pm3:25 쌤ppt160.161p  -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사칙연산</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+    x : <input type="text" name="x" id="x"><br>
+    y : <input type="text" name="y" id="y"><br>
+    <div>답 : <span id="result"></span></div>
+    <button type="button" id="btnAdd">+</button>
+    <button type="button" id="btnSub">-</button>
+
+    <script>
+        $(document).ready(function(){
+            $("#btnAdd").click(function(){
+                $("#result").text(
+                    parseInt($("#x").val()) + parseInt($("#y").val())
+                );
+            });
+            $("#btnSub").click(function(){
+                $("#result").text(
+                    parseInt($("#x").val()) - parseInt($("#y").val())
+                );
+            });
+        });
+    </script>
+</body>
+</html>

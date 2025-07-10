@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가위바위보 게임</title>
+</head>
+<body>
+    <h2>자바스크립트로 만드는 가위바위보 게임</h2>
+    <button class="rpsBtn" data-value="1">가위</button>
+    <button class="rpsBtn" data-value="2">바위</button>
+    <button class="rpsBtn" data-value="3">보</button>
+    <p id="result"></p>
+
+<script>
+//1가위 2바위 3보
+    function getComputerChoice(){
+        return Math.ceil(Math.random()*3);
+    }
+    function getRpsName(num){
+        if(num===1) return "가위";
+        if(num===2) return "바위";
+        if(num===3) return "보";
+    }
+    function judge(user, computer){
+        if(user===computer) return "비겼습니다.";
+        if(
+            (user===1 && computer===3) ||
+            (user===2 && computer===1) ||
+            (user===3 && computer===2)
+        ) return "이겼습니다.";
+        return "졌습니다.";
+    }
+
+    document.querySelectorAll('.rpsBtn').forEach(btn =>{
+        btn.addEventListener('click', function(){
+            const user = Number(this.dataset.value);
+            const computer = getComputerChoice();
+            const result = judge(user, computer);
+
+            document.getElementById('result').innerText = 
+                `컴퓨터: ${getRpsName(computer)}, 사용자: ${getRpsName(user)}\n결과: 
+        })
+    })
+
+</script>
+
+
+</body>
+</html>
+
+<script>
+/*
+1.컴퓨터가 생각을한다.
+computer = Math.ceil(Math.random()*3);
+console.log(computer);
+2.사람이 버튼을 누른다. = 가위바위보중에 선택
+3.누가 이겼는지 판단후 출력
+*/
+
+</script>

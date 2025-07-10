@@ -1,0 +1,29 @@
+<!-- //쌤ppt143p. onkeypress이벤트처리 중요함. -->
+<!-- 정규식은 GPT한테 만들어달라고 해 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="text" onkeypress="goNumber(event)">
+  <input type="text" oninput="goNumber2(this)">
+
+  <script>
+    function goNumber(event) {
+      // 사건발생하면 그 사건에 대한 정보 저장하는 객체 존재함
+      console.log(event);
+      if (event.keyCode < 48 || event.keyCode > 57) {
+        event.preventDefault(); // 예전방식 returnValue 말고 이거 사용 추천
+      }
+    }
+
+    function goNumber2(me) {
+      // 정규식: 0~9를 제외한 문자를 빈 문자열로 대체
+      me.value = me.value.replace(/[^0-9]/g, '');
+    }
+  </script>
+</body>
+</html>

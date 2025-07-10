@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button type="button" style="background-color: aquamarine;"
+            onclick="changeBackground(this)">배경색</button>
+    <button type="button" style="background-color: rgb(30, 228, 30);"
+            onclick="changeBackground(this)">배경색</button>
+    <button type="button" style="background-color: rgb(253, 19, 164);"
+            onclick="changeBackground(this)">배경색</button>
+    <button type="button" style="background-color: rgb(234, 247, 54);"
+            onclick="changeBackground(this)">배경색</button>
+    <button type="button" style="background-color: rgb(252, 171, 175);"
+            onclick="changeBackground(this)">배경색</button>
+
+<script>
+    function changeBackground(me) {
+        document.body.style.backgroundColor = me.style.backgroundColor;
+         //예전방식인데 잔뜩안붙여도 돼서 편함.
+    }
+
+    </script>
+</body>
+</html>

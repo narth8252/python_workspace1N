@@ -1,0 +1,32 @@
+<!-- 
+250626 pm3:25 쌤ppt160p  -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    x : <input type="text" name="x", id="x"></br>
+    y : <input type="text" name="y", id="y"></br>
+    <div id="result"></div>
+    <button type="button" id="btnAdd">+</button>
+    <button type="button" id="btnSub">-</button>
+
+    <script>
+        $(document).ready(()=>{
+            $("#btnAdd").click(()=>{
+                $("#result").html(parseInt($("#x").val())+
+                                parseInt($("#y").val()))
+            })
+        $(document).ready(()=>{
+            $("#btnAdd").click(()=>{
+                $("#result").html(parseInt($("#x").val())+
+                            parseInt($("#y").val()))
+            })
+
+        })
+    </script>
+</body>
+</html>

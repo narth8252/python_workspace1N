@@ -1,0 +1,24 @@
+<!--  -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button type="button" id="btnCall">함수가 3초뒤 호출됨</button>
+
+    <script>
+        window.onload=()=>{
+            btnCall = document.querySelector("#btnCall");
+            btnCall.addEventListener("click", ()=>{
+                setTimeout(() => {
+                    alert("타이머활용하기");
+                }, 3000);
+            })
+        }
+
+    </script>
+</body>
+</html>

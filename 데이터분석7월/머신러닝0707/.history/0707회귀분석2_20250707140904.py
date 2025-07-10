@@ -1,0 +1,43 @@
+#pip install mglearn (설치)
+# 250707 pm1시 250701딥러닝_백현숙.PPT-282p
+# C:\Users\Admin\Documents\딥러닝2507  >  250701딥러닝_백현숙.PPT-p
+# 저장폴더 C:\Users\Admin\Documents\GitHub\python_workspace1N\데이터분석250701\머신러닝250707
+
+# LinearRegression + KNN + 시각화 비교
+
+import mglearn
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+
+# 선형회귀 시각화
+mglearn.plots.plot_linear_regression_wave()
+
+plt.title("mglearn 선형회귀 예제")
+plt.show()
+
+
+# (특성 달랑1개. 개개인의 차이(IQ,1~5차모의고사 성적)같은거 넣으면 특성늘어남. )
+#공부시간
+X = [[20], [19], [17], [18], [12], [14], [10], [9], [16], [6]]
+#평균값 
+y = [100,100, 90, 90, 60, 70, 40, 40, 70, 30]
+
+# 직접 학습 시각화 (내 데이터로)
+from sklearn.model_selection import train_test_split
+X = np.array(X)
+y = np.array(y)
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1)
+
+from sklearn.linear_model import LinearRegression
+model = LinearRegression() #하이퍼파라미터없음(과대,과소던 할수있는건 데이터셋 늘리는것뿐)
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+print("훈련셋: ", model.score(X_train, y_train))
+print("테스트셋: ", model.score(X_test, y_test))
+print("기울기: ", model.coef_)
+print("절편: ", model.intercept_)
+y_pred2 = X_test * model.coef_ + model.intercept_
+print(y_test)
+print(y_pred)
+print(y_pred2)
