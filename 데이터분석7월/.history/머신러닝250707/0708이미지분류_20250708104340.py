@@ -1,0 +1,1 @@
+#sklearn에서 load_digits() ㅁ
