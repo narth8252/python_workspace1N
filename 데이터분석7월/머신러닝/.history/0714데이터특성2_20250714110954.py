@@ -1,0 +1,8 @@
+import pandas as pd
+import numpy as np
+import mglearn
+import os
+import matplotlib.pyplot as plt
+
+#특성이 원래는 카테고리인데 숫자형
+
