@@ -3,6 +3,18 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Conda/Anaconda 관련
+.conda/
+*.conda_trash
+*.pyd.c~
+*.dll.c~
+*.token
+
+# VS Code 관련
+.vscode/
+__pycache__/
+*.pyc
+
 # C extensions
 *.so
 
