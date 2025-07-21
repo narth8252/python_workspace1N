@@ -1,5 +1,0 @@
-import numpy as np
-
-#range함수대신
-#for나 list불펼요
-print( np.)

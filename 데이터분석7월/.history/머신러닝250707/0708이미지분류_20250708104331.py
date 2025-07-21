@@ -1,1 +1,0 @@
-#sklearn에서 load
