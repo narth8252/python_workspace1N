@@ -1,21 +1,28 @@
-# C:\Users\Admin\Documents\GitHub\python_workspace1N폴더에 .gitignore파일(.txt없음)
 # Python bytecode
 __pycache__/
 *.py[cod]
+*$py.class
 
-# 가상환경
+# Virtual environments
 env/
 venv/
 .venv/
 ENV/
-.history/
+.conda/
+conda-meta/
+
 # IDE
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
 
-# 테스트 및 타입 검사 캐시
+# Testing and type checking cache
 .pytest_cache/
 .mypy_cache/
+.coverage
+htmlcov/
 
 # Build / distribution
 build/
@@ -23,12 +30,69 @@ dist/
 *.egg-info/
 .eggs/
 
-# Jupyter
+# Jupyter Notebook
 .ipynb_checkpoints/
+*.ipynb_checkpoints
 
-# pip logs
+# Data files (large files)
+*.npz
+*.pkl
+*.pickle
+*.csv
+*.xlsx
+*.xls
+*.db
+*.sqlite
+*.sqlite3
+
+# Log files
+*.log
 pip-log.txt
 pip-delete-this-directory.txt
 
-# VS Code 자동저장 히스토리
+# OS related
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+
+# MySQL/DB related
+*.sql
+dump.rdb
+
+# Web development related
+node_modules/
+*.min.js
+*.min.css
+
+# VS Code auto-save history
 **/.history/
+
+# Personal configuration files
+*.ini
+config.py
+secrets.py
+.env
+.env.local
+
+# Font files (can be large)
+*.ttf
+*.otf
+*.woff
+*.woff2
+
+# .conda environment files
+*.conda
+
+# large datasets
