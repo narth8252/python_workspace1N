@@ -95,4 +95,8 @@ secrets.py
 # .conda environment files
 *.conda
 
-# large datasets
+# large datasets folder
+데이터분석/data/aclImdb/
+데이터분석/data/aclImdb_v1/
+데이터분석/data/flowers/
+데이터분석/data/glass/
