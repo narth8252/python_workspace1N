@@ -38,8 +38,6 @@ dist/
 *.npz
 *.pkl
 *.pickle
-*.csv
-*.xlsx
 *.xls
 *.db
 *.sqlite
