@@ -93,6 +93,10 @@ secrets.py
 # .conda environment files
 *.conda
 
+*.keras
+
 # large datasets folder
 Deep_Learning/data/
 Machine_Learning/data/
+Data_Analysis/data/
+Data_Analysis/fonts/
