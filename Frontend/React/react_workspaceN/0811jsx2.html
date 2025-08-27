@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+</head>
+<body>
+
+<!-- 모든출력은 root 아이디 안에 -->
+    <div id="root"></div>
+
+    <script type="text/babel">
+        let rootNode = document.getElementById("root");
+
+        let name = "홍길동";
+        let age = 23;
+        let mystyle = {"color":"skyblue", "fontSize":"18pt"}
+        //변수통해 스타일주려면 객체로 넘겨야
+        //font-size스네이크표기법 안되니 카멜표기법 fontSize로 표기
+
+        //ReactDOM라이브러리와 위에있는 div태그랑 연동하고 모든코드는 React.StrictMode에.
+        // rootNode와 ReactDOM을 연동하고, <React.StrictMode>를 사용하여 개발 환경의 잠재적 문제를 감지합니다.
+        ReactDOM.createRoot(rootNode).render(
+            <React.StrictMode>
+                <h1>250811.JSX를 배워보자</h1>
+
+                <h1 style={mystyle}>이름 : {name}</h1>
+                <h1 style={{"color":"emerald", "backgroundColor":"lightgrey"}}>나이 : {age}</h1>
+                <p>전체스타일은 스카이블루, 나이는에메랄드로 지정</p>
+            
+            </React.StrictMode>
+
+        )
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+</head>
+<body>
+
+<!--  부모-자식 컴포넌트 구조를 이용한 카운터-->
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState } = React; 
+        let rootNode = document.getElementById("root");
+        //ReactDOM라이브러리와 위에있는 div태그랑 연동하고 모든코드는 React.StrictMode에
+        ReactDOM.createRoot(rootNode).render(
+            <React.StrictMode>
+                <h1>Hello React</h1> 
+                {/* App 컴포넌트에 props를 전달합니다. */}
+                <App /> 
+            </React.StrictMode>
+        )
+
+        // 부모 컴포넌트 (App)
+        function App(){
+            const [count, setCount] = useState(0);
+            const increase = () => { setCount(count + 1); };
+            const decrease = () => { setCount(count - 1); };
+
+            return(
+                <div>
+                    <h1>부모 컴포넌트 (App)</h1>
+                    <p>현재 부모의 카운트: {count}</p>
+                    <hr />
+                    <Counter 
+                        count={count}
+                        increase={increase}
+                        decrease={decrease}
+                    />
+                </div>
+            )}
+
+
+        // 자식 컴포넌트 (Counter)
+        function Counter(props){
+            return(
+                <div>
+                    <h1>자식 컴포넌트 (Counter)</h1>
+                    <p>현재 자식 카운트: {props.count}</p>
+                    
+                    <button type="button" onClick={props.increase}>증가</button>
+                    <button type="button" onClick={props.decrease}>감소</button>
+                </div>
+            )
+        }
+
+    </script>
+</body>
+</html>

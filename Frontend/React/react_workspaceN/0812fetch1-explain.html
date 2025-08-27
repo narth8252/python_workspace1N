@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX with React</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<!-- .then (response => response. json ( ) )
+.then(json => console.log(json)) -->
+<!--250812 am9시 fetch: React를 활용해 외부 API에서 데이터를 가져와 화면에 표시하는 방법 -->
+<!-- 가짜 백엔드 서버(jsonplaceholder)**에서 할 일 목록(To-Do List) 데이터를 가져와 웹페이지에 보여주는 역할을 해요.
+코드를 크게 세 부분으로 나누어 설명할 수 있어요.
+<head> React와 Babel 라이브러리를 불러옵니다.
+<body> 실제 React 코드가 작성되는 곳.
+<script> HTML과 연동되어 React 컴포넌트를 렌더링. -->
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        //useState : React에서 변수관리하는 방법.
+        //todosList : 가져온 할일 목록 담는 변수, 초기값 빈배열[]
+        //isLoading : 페이지로딩되자마자 데이터가져오기 시작->초기값 true 여야 자연스럽죠?
+        const { useState } = React; 
+        let rootNode = document.getElementById("root");
+        ReactDOM.createRoot(rootNode).render(
+            <React.StrictMode>
+                <h1>Todo List (AJAX)</h1>  
+                <App />          
+            </React.StrictMode>)
+
+        //ajax로 백앤드 서버로부터 데이터불러오기
+        //mock서버 jsonplaceholder사이트, json서버라는 프로그램을 가동시키고, json파일을 만들어서
+        //던져주면 백앤드 서버처럼 동작을 한다.
+        //https://jsonplaceholder.typicode.com/
+        //https://axios-http.com/docs/intro
+        // App 컴포넌트
+        function App(){
+            const [todosList, setTodosList] = React.useState([]);
+            const [isLoading, setIsLoading] = React.useState(true);
+
+            // 백엔드 서버로부터 원격으로 데이터 불러오는 함수(API호출)
+            function loadData(){
+                // 1. 데이터를 가져오기 전에 로딩 상태를 'true'로 설정합니다.
+                setIsLoading(true);
+                // 2. .then() 메서드가 끝난 후 .catch()와 .finally()를 이어서 붙입니다.
+                fetch('https://jsonplaceholder.typicode.com/todos')
+                    .then(response => response.json())
+                    .then(json => {
+                        console.log(json);
+                        setTodosList(json);
+                    })
+                    .catch(error => {console.log("데이터 수신 에러:", error);})
+                    .finally(() => {setIsLoading(false);});
+                    // 3. 작업이 성공하든 실패하든, 마지막에 로딩 상태를 'false'로 설정합니다.
+                        
+                    
+            }
+        //window.onload=> DOM구조 완성후 이벤트발생 => $(document),.ready
+        //useEffect 사용해 컴포넌트가 첫렌더링될 때만 loadData 함수 호출 => onunload-unmount, 화면이 refresh 돼야할때 3번호출
+        //두개의 매개변수: 1st매개변수(전체 DOM에 무슨일생기면 호출될 함수), 
+        //2nd매개변수`[]`:(내가 감시할 대상)컴포넌트가 처음 렌더링될 때만 loadData 함수를 호출하라는 의미
+            React.useEffect(()=>{loadData();}, [])
+
+            //return 문 안에 들어가는 문장이 JSX문법이라 if나 for문 사용불가
+            return(
+                <div>
+                    {/* 삼항 연산자를 사용하여 조건부 렌더링을 구현합니다. */}
+                    {isLoading ? (
+                        <p>데이터 로딩중</p>
+                    ) : (
+                        <ul>
+                            {todosList.map((item, i)=>{
+                                return(
+                                    <li key={i}>{item.userID} {item.title} {item.id} {item.completed.toString()}</li>
+                                );
+                            })}
+                        </ul>
+                    )}
+                </div>
+            );
+        }
+    </script>
+</body>
+</html>

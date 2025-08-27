@@ -1,0 +1,61 @@
+250812 PM5시 프론트엔드(React)+백엔드(fastAPI) 결합 과정 최종정리
+지금까지 진행한 **React와 FastAPI 프로젝트의 전체적인 개발 과정**
+
+---
+
+### 챕터 1: 프런트엔드 환경 구축 (React)
+사용자가 직접 보게 될 웹사이트 화면을 만드는 과정입니다.
+
+#### **1. 프로젝트 생성 및 초기 설정**(250812 VITE-REACT.txt)
+프로젝트 시작할 폴더로 이동 후, `Vite`를 사용해 React 프로젝트를 생성
+* **`cd C:\Users\Admin\Documents\GitHub\python_workspace1N\Frontend\React\react_project`**: 작업할 폴더로 이동
+* **`npm create vite@latest`**: 프로젝트명(`myhome_vite`), 프레임워크(`React`), 언어(`JavaScript`)를 선택해 새 프로젝트를 만듭니다.
+* **`cd myhome_vite`**: 생성된 프로젝트 폴더로 이동
+* **`npm install`**: `package.json`에 명시된 필수 라이브러리를 설치
+* **`npm run dev`**: 개발용 서버를 실행하여 웹사이트를 확인합니다. `http://localhost:5173` 주소로 접속
+
+#### **2. CSS 스타일 수정**
+프로젝트의 레이아웃을 원하는 대로 바꾸기 위해 기본 CSS 파일을 수정
+* **`App.css`** 파일의 `#root` 선택자에 있는 `margin`, `width`, `text-align` 속성을 수정하여 페이지의 정렬을 변경
+
+#### **3. 추가 라이브러리 설치**
+페이지 이동, 디자인, 백엔드 통신 등 다양한 기능을 위해 필요한 라이브러리를 설치
+* **`npm i react-router-dom`**: 여러 페이지를 만들고 이동하는 기능을 추가
+* **`npm install react-bootstrap bootstrap`**: Bootstrap 디자인을 적용
+* **`npm i axios`**: 백엔드 서버와 데이터를 주고받기 위해 설치
+
+---
+
+### 챕터 2: 백엔드 환경 구축 (FastAPI)
+사용자에게 보이지 않는 데이터 처리와 저장을 담당하는 서버를 만드는 과정.
+
+#### **1. 프로젝트 폴더로 이동 및 서버 실행**
+백엔드 프로젝트가 있는 폴더로 이동하여 FastAPI 서버를 실행
+* **`cd C:\Users\Admin\Documents\GitHub\python_workspace1N\Backend\fastapi\fastapi_workspaceN`**: 백엔드 프로젝트 폴더로 이동
+* **`uvicorn main:app --reload`**: FastAPI 서버를 실행합니다. `http://localhost:8000` 주소에서 API작동시작.
+
+#### **2. API 엔드포인트 정의**
+FastAPI의 `main.py` 파일에서 프런트엔드와 주고받을 API를 정의
+* **`/scoreList`**: 성적 목록 데이터를 JSON 형태로 반환하는 API 생성
+* **`/score/insert`**: `name`, `kor`, `eng`, `mat` 데이터를 받아 새로운 성적을 추가하는 API 생성
+* **`CORS` 설정**: 프런트엔드 서버(`localhost:5173`)와 백엔드 서버(`localhost:8000`)가 서로 통신할 수 있도록 **CORS(Cross-Origin Resource Sharing)** 설정을 반드시 추가
+---
+
+### 챕터 3: 프런트엔드와 백엔드 연결
+두 서버를 연결하여 실제 데이터가 오가는 기능을 구현하는 과정
+
+#### **1. 데이터 추가 기능 확인 (백엔드)**
+FastAPI 서버가 실행된 상태에서 `http://localhost:8000/docs` 주소에 접속하면 FastAPI의 Swagger UI 페이지가 열립니다.
+* `POST /score/insert` 엔드포인트에서 'Try it out' 버튼을 누른 후, 이름과 성적 데이터를 입력하고 'Execute'를 클릭하면 데이터가 서버에 정상적으로 추가되는지 확인할 수 있습니다.
+
+#### **2. 데이터 조회 기능 구현 (프런트엔드)**
+`ScoreList` 컴포넌트에서 `axios.get()`을 사용해 백엔드의 `/scoreList` API를 호출
+* 컴포넌트 처음로딩될 때 `useEffect` 훅사용해 `loadData` 함수를 호출하면, 서버에서 최신 성적목록을 화면에 표시
+
+#### **3. 전체 동작 확인**
+1.  **터미널 1**: FastAPI 서버를 실행
+2.  **터미널 2**: React 서버를 실행
+3.  웹 브라우저에서 `http://localhost:5173`에 접속
+4.  `/score/list` 경로로 이동하면 백엔드 서버에서 가져온 성적 목록이 화면에 나타납니다.
+5.  백엔드 Swagger UI에서 새로운 성적을 추가한 후, 프런트엔드 페이지를 새로고침하면 추가된 데이터가 보이는 것을 확인
+

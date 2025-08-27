@@ -1,0 +1,362 @@
+konlpy : Korean Natural Language Processing
+한국어 자연어 처리를 위한 파이썬 라이브러리입니다.
+한국어 텍스트를 분석하는 데 필요한 다양한 형태소 분석기들을 통합하여 제공합니다. 
+형태소 분석기는 문장을 의미를 가지는 가장 작은 단위인 **형태소(morpheme)**로 쪼개는 역할을 합니다.
+
+예를 들어, "아버지가방에들어가신다"라는 문장을 형태소 분석하면 다음과 같이 나눌 수 있습니다.
+아버지 (명사) + 가 (조사) + 가방 (명사) + 에 (조사) + 들어가신다 (동사)
+
+왜 필요한가요?
+영어는 단어가 띄어쓰기로 명확하게 구분되기 때문에 단순히 공백을 기준으로 단어를 분리할 수 있습니다. 
+하지만 한국어는 조사, 어미 등이 단어에 붙어있어 단순히 띄어쓰기만으로는 단어를 정확히 분리하기 어렵습니다. 
+konlpy는 이러한 한국어의 특성을 이해하고 텍스트를 정확하게 처리하는 데 필수적인 도구입니다.
+
+제공하는 형태소 분석기
+Okt (Open Korean Text): 오픈소스 한국어 처리기
+Mecab: 일본어 형태소 분석기 MeCab을 한국어에 맞춰 수정한 것
+Kkma (꼬꼬마): 서울대학교에서 개발한 형태소 분석기
+Hannanum: 한나눔 형태소 분석기
+이러한 분석기들은 성능과 특성이 조금씩 다르므로, 처리하려는 데이터의 특성에 맞게 선택하여 사용합니다.
+----------------------------------------------------------------------------------------
+파이프라인(Pipeline)이란?
+파이프라인은 복잡한 작업을 여러 단계로 나누고, 각 단계가 순서대로 연결되어 데이터를 처리하는 흐름을 말해요. 
+마치 공장에서 물건을 만드는 과정과 같아요. 
+원재료가 첫 번째 공정(단계)을 거치고, 다음 공정으로 이동해서 가공되고, 최종적으로 완제품이 나오는 것처럼요.
+딥러닝에서는 데이터를 모델이 이해할 수 있는 형태로 바꾸는 전 과정을 파이프라인이라고 해요. 
+이 코드는 네이버 영화평 데이터(원재료)를 딥러닝 모델(공장)에 넣기 위해 여러 단계를 거치는 파이프라인을 구축한 거예요.
+
+----------------------------------------------------------------------------------------
+1. 버퍼(Buffer): 컴퓨터가 데이터를 처리할 때 사용하는 임시 저장 공간이에요.
+쉽게 말해, '버퍼링'을 떠올리면 이해하기 쉬워요. 우리가 동영상을 볼 때, 인터넷 속도가 느려지면 동영상이 끊기지 않게 미리 일정 부분의 데이터를 받아두죠? 이때, 미리 받아둔 데이터를 저장해 놓는 공간이 바로 버퍼예요.
+
+1-1. 왜 필요한가요?
+버퍼는 데이터 생산자와 소비자 간의 속도 차이를 보완해주는 역할을 해요.
+- 생산자(Producer): 데이터를 만드는 주체 (예: 동영상 서버, 하드 드라이브, CPU)
+- 소비자(Consumer): 데이터를 사용하는 주체 (예: 동영상 재생 프로그램, GPU)
+만약 생산자와 소비자의 속도가 다르면 병목 현상이 발생해요. 
+예를 들어, CPU가 데이터를 만드는 속도가 GPU가 데이터를 처리하는 속도보다 느리다면 GPU는 데이터를 기다리느라 놀게 되죠.
+
+이때 버퍼가 있으면, CPU가 미리 만들어 놓은 데이터를 버퍼에 채워 넣고, 
+GPU는 필요할 때마다 버퍼에서 데이터를 가져와서 처리합니다. 
+이로써 CPU와 GPU가 서로를 기다리는 시간 없이 각자의 작업을 계속할 수 있어 전체적인 효율이 높아지는 거예요.
+코딩에서 buffer_size는 이 버퍼의 크기를 지정하는 역할을 합니다. 
+즉, 얼마나 많은 데이터를 미리 저장해둘지 결정하는 것이죠. 
+tf.data.AUTOTUNE은 시스템이 알아서 최적의 크기를 정해주는 스마트한 설정값이에요.
+
+2. 메모리, 캐시, 버퍼는 
+모두 데이터를 임시로 저장하는 공간이지만, 위치와 역할, 속도에서 차이가 있어요. 
+컴퓨터 시스템 내에서 데이터를 효율적으로 처리하기 위해 계층적으로 구성된 저장 공간들이라고 생각하면 이해하기 쉬워요.
+
+ 🧠메모리 (RAM)
+메모리는 컴퓨터의 작업 공간이에요.
+위치: CPU와 멀리 떨어진 메인보드에 장착되어 있어요.
+역할: 현재 실행 중인 프로그램과 데이터를 보관하는 주 저장 공간이에요. CPU는 메모리에 있는 데이터를 가져와서 처리해요.
+속도: 하드디스크나 SSD 같은 보조 저장장치보다는 훨씬 빠르지만, 캐시보다는 느려요.
+특징: 전원을 끄면 데이터가 사라지는 휘발성 저장 공간이에요.
+
+ ⚡️캐시 (Cache)
+캐시는 CPU의 빠른 작업대예요.
+위치: CPU 내부에 있거나 CPU와 매우 가까운 곳에 있어요.
+역할: CPU가 다음에 자주 사용할 것으로 예상되는 데이터를 메모리에서 미리 가져와서 임시로 저장해 둬요. CPU와 메모리 간의 속도 차이를 줄여줘요.
+속도: 메모리보다 훨씬 빠르며, CPU의 속도에 맞춰 작동해요.
+특징: 메모리보다 용량이 훨씬 작고 가격이 비싸요. 보통 L1, L2, L3와 같이 여러 단계로 나뉘어 있어요.
+
+ 📦버퍼 (Buffer)
+버퍼는 데이터를 전달하기 위한 임시 대기 공간이에요.
+위치: 데이터를 주고받는 두 장치(예: CPU와 하드디스크, 인터넷 스트리밍 서버와 PC) 사이에 있어요.
+역할: 데이터를 만드는 쪽(생산자)과 데이터를 사용하는 쪽(소비자) 간의 속도 차이를 완화하기 위해 사용돼요. 생산자가 데이터를 만드는 속도와 소비자가 데이터를 사용하는 속도가 다를 때, 데이터가 끊기지 않고 원활하게 흐르도록 도와주는 역할을 해요.
+속도: 사용되는 장치에 따라 속도가 달라요.
+비유:  동영상 버퍼링이 가장 좋은 예시예요. 스트리밍 서버(생산자)가 보내는 데이터 속도가 시청자(소비자)의 재생 속도보다 느릴 때, 버퍼는 미리 데이터를 받아두고 재생이 원활하도록 도와줘요.
+
+-메모리: 컴퓨터의 메인 작업대. CPU는 여기에 있는 데이터를 처리해요.
+-캐시: CPU가 메모리에서 자주 쓸 데이터를 미리 가져다 놓는 고속의 작은 작업대.
+-버퍼: 서로 다른 속도를 가진 장치들이 데이터를 주고받을 때, 병목 현상 없이 원활하게 통신하도록 돕는 임시 대기 공간.
+
+임시 저장 공간이라는 공통점이 있지만, 
+메모리는 주 저장 공간, 캐시는 CPU의 속도를 위한 고속 저장 공간, 
+버퍼는 장치 간의 속도 불균형 해소를 위한 완충 공간이라는 차이점이 있습니다.
+----------------------------------------------------------------------------------------
+코드 한 줄 한 줄 설명
+⌈◤Python￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣◥
+from multiprocessing import process
+from operator import neg
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras.layers import TextVectorization
+from konlpy.tag import Okt
+import re
+import os, pathlib, shutil, random
+import numpy as np # Used for dummy dataset creation
+from keras import layers
+◣________________________________________________________________◢
+tensorflow as tf: 딥러닝의 핵심 도구인 텐서플로우를 가져와서 tf라고 짧게 부르기로 약속합니다.
+keras: 텐서플로우를 더 쉽게 쓸 수 있게 도와주는 도구예요.
+
+TextVectorization: 텍스트를 숫자로 바꿔주는 역할을 하는 도구입니다.
+
+Okt: 한국어를 분석하기 위한 konlpy 도구 중 하나입니다.
+
+re: 문자를 찾거나 바꿔주는 정규표현식 도구입니다.
+
+os, shutil 등: 폴더를 만들거나 지우고, 파일을 관리하는 도구들입니다.
+
+numpy as np: 과학 계산에 쓰이는 숫자 도구입니다.
+
+1단계: 데이터 가져오기
+⌈◤Python￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣◥
+from Korpora import Korpora
+Korpora.fetch("nsmc")
+#저장위치: C:\Users\Admin(사용자계정)\Korpora\nsmc
+corpus = Korpora.load("nsmc")
+print(corpus. train[ : 3])
+◣________________________________________________________________◢
+1)Korpora라는 도구로 네이버 영화평 데이터(NSMC)를 인터넷에서 다운로드합니다.
+2)다운로드한 데이터를 corpus라는 변수에 저장합니다.
+3)데이터가 잘 불러와졌는지 확인하기 위해 훈련 데이터 중 처음 3개를 출력해봅니다.
+
+2단계: 데이터 정리하기
+⌈◤Python￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣◥
+def create_korean_dataset(base_dir="korean_imdb"):
+    # ... (생략: 위에서 설명한 폴더 생성 및 파일 정리) ...
+    print("작업완료")
+    return base_dir
+◣________________________________________________________________◢
+keras가 데이터를 쉽게 읽을 수 있도록 폴더 구조를 만드는 역할을 해요.(정리정돈)
+ • train, val, test라는 이름의 큰 폴더를 만들어요.
+ • 각 폴더 안에 pos(긍정 리뷰), neg(부정 리뷰)라는 작은 폴더를 만들어요.
+ • NSMC 데이터의 긍정/부정 리뷰들을 해당 폴더에 파일로 저장합니다.
+
+3단계: 딥러닝 도구에 데이터 연결하기
+⌈◤Python￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣◥
+korean_data_dir = "./data/naver_imdb"
+
+batch_size = 32
+train_ds_raw = keras.utils.text_dataset_from_directory(
+    korean_data_dir + "/train", batch_size=batch_size, label_mode="binary")
+val_ds_raw = keras.utils.text_dataset_from_directory(
+    korean_data_dir + "/val", batch_size=batch_size, label_mode="binary")
+test_ds_raw = keras.utils.text_dataset_from_directory(
+    korean_data_dir + "/test", batch_size=batch_size, label_mode="binary")
+◣________________________________________________________________◢
+방금 정리한 폴더에 있는 데이터들을 keras 도구로 읽어와서 딥러닝용 데이터 형식(tf.data.Dataset)으로 바꿔줍니다.
+ • train_ds_raw: train 폴더에 있는 파일들을 불러옵니다.
+ • batch_size=32: 한 번에 32개씩 데이터를 가져오겠다는 뜻입니다.
+ • label_mode="binary": pos, neg 폴더 이름을 긍정(1), 부정(0)으로 자동 변환해줍니다.
+
+4단계: 한국어 맞춤형 데이터 전처리
+이 부분은 한국어의 특성을 고려해 데이터를 모델이 더 잘 이해할 수 있게 만드는 핵심 과정입니다.
+⌈◤Python￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣◥
+okt = Okt()
+def clean_text(text):
+    text = text.decode("utf-8") #⭐tf.data.Dataset이 보내는 데이터를 읽을 수 있게 변환
+    text = text.lower() # 문자를 모두 소문자로 변경
+    text = re.sub(r"[^가-힣a-zA-Z0-9\s]", "", text) # 한글, 영어, 숫자 외의 문자 제거
+    return text
+◣________________________________________________________________◢
+ • okt = Okt(): konlpy 도구 중 하나인 Okt를 사용할 준비를 합니다.
+ • clean_text 함수는 텍스트를 정리하는 역할을 합니다. 특히 decode("utf-8")은 텐서플로우가 보낸 바이트 데이터를 사람이 읽을 수 있는 문자열로 바꿔주는 중요한 과정입니다.
+
+⌈◤Python￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣◥
+def python_korean_preprocess(text_tensor):
+    processed_text = []
+    for text_bytes in text_tensor.numpy():
+        cleaned_text = clean_text(text_bytes)
+        morphed_text = " ".join(okt.morphs(cleaned_text)) # ⭐ 형태소 분석
+        processed_text.append(morphed_text)
+    return tf.constant(processed_text, dtype=tf.string)
+◣________________________________________________________________◢
+ • python_korean_preprocess 함수는 konlpy를 사용해 형태소 분석을 하는 역할을 해요.
+ • okt.morphs(cleaned_text): "영화가 정말 재미있다"라는 문장을 ['영화', '가', '정말', '재미', '있다']처럼 의미 단위로 쪼갭니다.
+
+⌈◤Python￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣◥
+def tf_korean_preprocess_fn(texts, labels):
+    processed_texts = tf.py_function(
+        func = python_korean_preprocess,
+        inp = [texts],
+        Tout = tf.string
+    )
+    processed_texts.set_shape(texts.get_shape())
+    return processed_texts, labels
+◣________________________________________________________________◢
+tf.py_function은 텐서플로우가 파이썬 함수(python_korean_preprocess)를 사용할 수 있도록 도와주는 연결고리예요. 이렇게 해야 파이프라인에서 한국어 전처리 같은 복잡한 작업을 할 수 있습니다.
+
+5단계: 텍스트를 숫자로 변환 (벡터화)
+⌈◤Python￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣◥
+max_tokens = 10000 
+output_sequence = 20
+vectorizer = TextVectorization(
+    max_tokens = max_tokens,
+    output_mode = "int",
+    output_sequence_length = output_sequence,
+    standardize = None,
+    split = "whitespace")
+◣________________________________________________________________◢
+TextVectorization 도구는 텍스트를 숫자로 바꿔주는 역할을 해요.
+ • max_tokens=10000: 가장 자주 나오는 단어 1만 개만 사용하겠다는 뜻입니다.
+ • output_mode="int": 각 단어를 고유한 정수로 바꾸겠다는 의미예요.
+ • output_sequence_length=20: 모든 문장의 길이를 20으로 맞춥니다.
+
+⌈◤Python￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣◥
+vectorizer.adapt(train_ds_processed.map(lambda x, y : x))
+◣________________________________________________________________◢
+adapt라는 명령어로 훈련 데이터를 분석해서 1만 개의 가장 자주 나오는 단어 목록(어휘 사전)을 만듭니다.
+
+⌈◤Python￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣◥
+def vectorize_text_fn(texts, labels):
+    return vectorizer(texts),labels
+◣________________________________________________________________◢
+
+이 함수는 형태소 분석이 끝난 텍스트를 위에서 만든 어휘 사전을 바탕으로 정수 벡터로 변환합니다.
+
+⌈◤Python￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣◥
+train_ds_vectorized = train_ds_processed.map(vectorize_text_fn, num_parallel_calls=tf.data.AUTOTUNE)
+# ... (생략: val, test 데이터셋도 같은 방식으로 처리)
+◣________________________________________________________________◢
+map 명령어로 데이터셋의 모든 데이터에 대해 텍스트를 숫자로 변환하는 작업을 적용합니다. num_parallel_calls는 여러 CPU를 동시에 써서 이 작업을 빠르게 하라는 뜻이에요.
+
+6단계: 데이터 로딩 속도 최적화
+⌈◤Python￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣◥
+train_ds_vectorized = train_ds_vectorized.cache().prefetch(buffer_size=tf.data.AUTOTUNE)
+val_ds_vectorized = val_ds_vectorized.cache().prefetch(buffer_size=tf.data.AUTOTUNE)
+test_ds_vectorized = test_ds_vectorized.cache().prefetch(buffer_size=tf.data.AUTOTUNE)
+◣________________________________________________________________◢
+이 코드는 딥러닝 모델 학습 속도를 빠르게 만들어주는 최적화 기술입니다.
+ • .cache(): 한 번 처리된 데이터를 임시로 저장해두고, 다음번에는 다시 처리할 필요 없이 바로 사용합니다.
+ • .prefetch(): 딥러닝 모델이 현재 데이터를 학습하는 동안, 다음 데이터를 미리 가져와서 준비해두는 기능입니다. buffer_size는 데이터를 미리 저장해두는 공간의 크기를 의미해요.
+
+7단계: 결과 확인
+⌈◤Python￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣◥
+print(vectorizer.get_vocabulary()[:20])
+for text_batch, label_batch in train_ds_vectorized.take(1):
+    print(text_batch.shape)
+    print(label_batch.shape)
+    print(text_batch[0, :10].numpy())
+    
+    vocabulary = vectorizer.get_vocabulary()
+    decoded = " ".join(vocabulary[idx] for idx in text_batch[0, :10].numpy() if idx>1)
+    print(decoded)
+print("--- 최종 데이터셋 준비작업 완료 ---")
+◣________________________________________________________________◢
+마지막으로, 모든 파이프라인이 잘 작동했는지 확인하는 부분입니다.
+1)vectorizer가 만든 어휘 사전의 첫 20개를 출력해봅니다.
+2)훈련 데이터의 첫 번째 배치를 가져와서,
+3)데이터의 형태(shape)를 출력하고, 첫 번째 리뷰의 앞 10개 단어를 숫자로 출력합니다.
+4)마지막으로, 그 숫자들을 다시 원래 단어로 복원하여 실제로 어떤 텍스트가 모델에 들어가는지 확인해봅니다.
+
+################# 딥러닝: Embedding(밀집벡터) → 단어 사이의 거리 표현 ##########################3
+#################        원핫인코딩 : 희소행렬, 차원이 너무 거대
+모델의 핵심 기술인 **임베딩(Embedding)**에 대한 배경 지식을 설명하고 있어요.
+임베딩? 텍스트를 숫자로 바꾸는 방법 중 하나예요. 
+    단어의 의미와 관계를 반영해서 비슷한 단어는 비슷한 숫자(벡터)로 표현해요. 
+    예를 들어 '개'와 '강아지'는 가까운 숫자로 표현되는 식이죠.
+원핫 인코딩? 임베딩과 달리 단어마다 고유한 자리에 1을 부여하는 방식인데,
+    단어 수가 많아지면 크고 비효율적인 행렬(희소 행렬)이 만들어진다는 단점이 있어요. 
+    그래서 이 코드에서는 더 효율적인 임베딩을 사용합니다.
+딥러닝 1단계: 
+⌈◤Python￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣◥
+voca_size = vectorizer.vocabulary_size()
+embedding_dim = 128 #대충
+◣________________________________________________________________◢
+ • voca_size = vectorizer.vocabulary_size(): 전처리에서 만든 어휘사전의크기를 가져와서 voca_size변수에 저장.
+ • embedding_dim = 128: 임베딩으로 만들 벡터의 차원(길이)을 128로 정했어요. 
+        이 숫자는 임베딩된 단어가 몇 개의 숫자로 표현될지 결정해요. 
+        숫자가 클수록 단어의 의미를 더 자세히 담을 수 있지만, 학습 시간이 길어질 수 있습니다.
+⌈◤Python￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣◥
+inputs = keras.Input(shape=(None,), dtype=tf.int64)
+◣________________________________________________________________◢
+모델에 입력될 데이터의 형태를 정하는 부분이에요.
+ • keras.Input(...): 모델의 입력을 정의합니다.
+ • shape=(None,): 입력데이터의 모양을 정해요. None은 데이터길이가 일정하지 않을 수 있고, (None,)는 1차원 데이터(리스트) 형태
+ • dtype=tf.int64: 입력데이터의 타입은 정수(int64)라는 것을 알려줍니다. 전 단계에서 텍스트를 숫자로 바꿨기 때문이에요.
+
+⌈◤Python￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣◥
+x = layers.Embedding(
+    input_dim = voca_size,
+    output_dim=embedding_dim,
+    mask_zero=True
+    )(inputs)
+◣________________________________________________________________◢
+텍스트를 임베딩 벡터로 변환하는 핵심 레이어입니다.
+ • layers.Embedding(...): Embedding 레이어를 만듭니다. 이 레이어는 문장을 이루는 단어들을 컴퓨터가 이해할 수 있는 숫자 벡터로 변환하는 역할
+ • input_dim = voca_size: 이 레이어는 총 voca_size개의 단어를 다룰 것이라고 알려줘요. 모델이 다룰 수 있는 단어의 종류가 총 몇 개인지 알려주는 정보입니다. 전 단계에서 우리가 만든 어휘 사전에 1만 개의 단어가 있다면, voca_size는 10000이 됩니다. 즉, 1만 개의 단어를 처리할 준비를 하라는 뜻입니다.
+ • mask_zero=True: padding때문에 생긴 숫자0 무시하라. 문장길이 달라서 짧은문장 뒤에 0 채워넣었는데, 이 0은 의미가 없으므로 학습에 방해되지 않게 처리.
+ • output_dim=embedding_dim: 각단어를 몇개의 숫자로 표현할지를 지정. embedding_dim = 128이라고 설정. 즉, '영화'라는 단어를 128개의 숫자로 이루어진 벡터로, '감동'이라는 단어도 128개의 숫자로 이루어진 벡터로 변환하라는 뜻입니다.
+ • (inputs): 위에서 정의한 inputs를 이 레이어에 연결합니다.
+
+⌈◤Python￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣◥
+x = layers.Bidirectional(layers.LSTM(32))(x) #순환신경망
+◣________________________________________________________________◢
+텍스트의 순서를 고려해 의미를 파악하는 **순환 신경망(RNN)**을 사용해요.
+ • layers.LSTM(32): LSTM은 RNN의 한 종류로, 문장의 앞부분 정보를 기억하며 학습하는 능력이 뛰어나요. 32는 이 레이어의 크기(노드 수)를 의미해요.
+ • layers.Bidirectional(...): LSTM을 양방향으로 사용하겠다는 뜻이에요. 문장을 앞에서부터 읽고, 뒤에서부터도 읽어서 더 풍부한 문맥 정보를 얻을 수 있게 해줘요.
+
+⌈◤Python￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣◥
+x = layers.Dropout(0.5)(x)
+◣________________________________________________________________◢
+모델이 특정 데이터에 너무 잘 맞아지는 현상(과적합)을 방지하기 위해 Dropout 레이어를 추가해요.
+ • layers.Dropout(0.5): 학습할 때 50%의 확률로 일부 노드를 임의로 끄는 역할을 합니다.
+
+⌈◤Python￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣◥
+outputs = layers.Dense(1, activation='sigmoid')(x) #이진분류라서
+◣________________________________________________________________◢
+모델의 최종 출력 레이어입니다.
+ • layers.Dense(1, ...): Dense 레이어는 신경망의 기본 레이어예요. 출력 노드가 1개입니다.
+ • activation='sigmoid': '시그모이드'라는 활성화 함수를 사용해요. 긍정(1)과 부정(0)을 구분하는 이진 분류 문제에 적합하며, 결과값이 0과 1 사이의 확률값으로 나옵니다.
+
+⌈◤Python￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣◥
+model = keras.Model(inputs, outputs)
+◣________________________________________________________________◢
+위에서 만든 inputs와 outputs를 연결하여 하나의 모델을 완성합니다.
+
+⌈◤Python￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣◥
+model.compile(optimizer='rmsprop', loss='binary_crossentropy', metrics=['accuracy'])
+◣________________________________________________________________◢
+모델을 학습시키기 전에 준비하는 단계예요.
+ • optimizer='rmsprop': 'rmsprop'이라는 최적화 도구를 사용해서 모델이 더 빨리 학습되도록 도와줍니다.
+ • loss='binary_crossentropy': 모델이 정답을 얼마나 틀렸는지 계산하는 방법(손실 함수)을 정해요. 이진 분류에 적합한 손실 함수입니다.
+ • metrics=['accuracy']: 모델이 얼마나 정확하게 맞췄는지(정확도)를 보여달라는 뜻입니다.
+
+⌈◤Python￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣◥
+model.summary()
+◣________________________________________________________________◢
+만들어진 모델의 전체적인 구조를 한눈에 보여줍니다. 각 레이어의 이름, 형태, 파라미터(학습 가능한 값) 개수 등을 확인할 수 있어요.
+
+모델 학습 및 저장
+⌈◤Python￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣◥
+callbacks = [
+    keras.callbacks.ModelCheckpoint("korean_rnn_sentiment_model.keras",
+                                    save_best_only=True,
+                                    monitor='val_accuracy',
+                                    mode = 'max')
+]
+◣________________________________________________________________◢
+모델 학습 중에 특정 조건을 만족했을 때 어떤 행동을 하도록 설정하는 callbacks를 정의합니다.
+ • ModelCheckpoint: 모델을 저장하는 기능입니다.
+ • "korean_rnn_sentiment_model.keras": 저장할 모델 파일의 이름입니다.
+ • save_best_only=True: 학습 중 가장 성능이 좋았을 때의 모델만 저장하라는 뜻입니다.
+ • monitor='val_accuracy': 검증 데이터의 정확도를 기준으로 판단합니다.
+ • mode = 'max': 정확도가 가장 높았을 때 저장하라는 의미예요.
+
+⌈◤Python￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣◥
+import pickle
+print("\n --- 모델 훈련 시작 ---")
+history = model.fit(train_ds_vectorized,
+                    validation_data=val_ds_vectorized,
+                    epochs=5,
+                    callbacks=callbacks)
+◣________________________________________________________________◢                    
+이제 드디어 모델을 훈련하는 단계입니다.
+ • model.fit(...): 모델을 학습시키는 명령어입니다.
+ • train_ds_vectorized: 훈련에 사용할 데이터셋을 넣어줍니다.
+ • validation_data=val_ds_vectorized: 훈련 중간에 모델의 성능을 평가할 검증 데이터셋을 넣어줍니다.
+ • epochs=5: 전체 데이터를 5번 반복해서 학습시키라는 뜻입니다.
+ • callbacks=callbacks: 위에서 정의한 저장 규칙을 적용합니다.
+
+⌈◤Python￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣◥
+with open("korean_rnn_sentiment_history", "wb") as f:
+    pickle.dump(history.history, f)
+print("--- korean_rnn_sentiment_히스토리 저장 완료 ---")
+◣________________________________________________________________◢                    
+모델 학습 과정에서 기록된 정보(손실값, 정확도 등)를 history 변수에 저장하고, 이 기록을 파일로 저장하는 부분입니다.
+ • history.history: 학습 기록 데이터가 담겨있습니다.
+ • pickle.dump(...): 이 기록 데이터를 korean_rnn_sentiment_history라는 파일에 저장합니다.

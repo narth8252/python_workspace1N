@@ -1,0 +1,104 @@
+Python gitignore
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+env/
+venv/
+.venv/
+ENV/
+.conda/
+conda-meta/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Testing and type checking cache
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Build / distribution
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Data files (large files)
+*.npz
+*.pkl
+*.pickle
+*.xls
+*.db
+*.sqlite
+*.sqlite3
+
+# Log files
+*.log
+pip-log.txt
+pip-delete-this-directory.txt
+
+# OS related
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+
+# MySQL/DB related
+*.sql
+dump.rdb
+
+# Web development related
+node_modules/
+*.min.js
+*.min.css
+
+# VS Code auto-save history
+**/.history/
+
+# Personal configuration files
+*.ini
+config.py
+secrets.py
+.env
+.env.local
+
+# Font files (can be large)
+*.ttf
+*.otf
+*.woff
+*.woff2
+
+# .conda environment files
+*.conda
+
+*.keras
+
+# large datasets folder
+Deep_Learning/data/
+Machine_Learning/data/
+Data_Analysis/data/
+Data_Analysis/fonts/

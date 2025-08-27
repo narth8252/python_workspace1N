@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+</head>
+<body>
+<!--React를 사용한 카운터 기능-->
+<!-- <script crossorigin src="...">를 통해 React 라이브러리를 불러오고, useState 훅을 사용해 number라는 상태를 관리하고 있어요. -->
+<!-- avaScript 방식보다 훨씬 효율적이고 직관적입니다. 코드가 복잡해져도 데이터와 화면을 분리해서 관리하기 때문에 실수를 줄일 수 있어요. -->
+<!-- 모든출력은 root 아이디 안에 -->
+    <div id="root"></div>
+
+    <script type="text/babel">
+        let rootNode = document.getElementById("root");
+        //ReactDOM라이브러리와 위에있는 div태그랑 연동하고 모든코드는 React.StrictMode에
+        ReactDOM.createRoot(rootNode).render(
+            <React.StrictMode>
+                <Counter/>
+            </React.StrictMode> 
+        )
+        //input태그랑 state 연동
+        function Counter (){
+            const [number, setNumber] = React.useState(0);
+            const increase = ()=>{
+                setNumber(number+1);
+            }
+            const decrease = ()=>{
+                setNumber(number-1);
+            }
+            return (
+                <div>
+                    <h2>{number}</h2>
+                    <button type="button" onClick={increase}>+</button>
+                    <button type="button" onClick={decrease}>-</button>
+                </div>
+            )
+        }   
+    </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+</head>
+<body>
+
+<!-- 모든출력은 root 아이디 안에 -->
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React; //이코드쓰면 아래 React.빼도됨
+        // useState를 React에서 가져와서 사용할 수 있게 합니다.
+        let rootNode = document.getElementById("root");
+        // Score 컴포넌트를 렌더링합니다.
+        ReactDOM.createRoot(rootNode).render(
+            <React.StrictMode>
+                <Score />
+            </React.StrictMode>
+        );
+
+        //input태그랑 state 연동
+        //이름,국어,영어,수학 입력받아 총점,평균 출력하는 Score컴포넌트 만들기
+        function Score(){
+            const [name, setName] = useState("");
+            const [kor, setKor] = useState(0);
+            const [eng, setEng] = useState(0);
+            const [mat, setMat] = useState(0);
+            const [result, setResult] = useState("");
+
+            //총점 평균
+            const process = () => { 
+                let total = parseInt(kor) + parseInt(eng) + parseInt(mat);
+                let avg = total / 3;
+                setResult(`${name}의 총점은 ${total}점이고, 평균은 ${avg.toFixed(2)}점입니다.`);
+            };
+            function clear(){
+                setName("");
+                setKor(0);
+                setEng(0);
+                setMat(0);
+                setResult("");
+            };
+            return(
+                <div>
+                    <h1>성적 계산기</h1>
+                    이름: <input type="text" onChange={(e)=> setName(e.target.value)} /><br/>
+                    국어: <input type="text" onChange={(e)=> setKor(e.target.value)} /><br/>
+                    영어: <input type="text" onChange={(e)=> setEng(e.target.value)} /><br/>
+                    수학: <input type="text" onChange={(e)=> setMat(e.target.value)} /><br/>
+                    
+                    {/* 'process'와 'clear' 함수를 호출하는 버튼을 추가했습니다. */}
+                    <button onClick={process}>결과 보기</button>
+                    <button onClick={clear}>초기화</button>
+
+                    <h2>결과: {result}</h2>
+                </div>
+            );
+        }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,100 @@
+250812 React 프로젝트를 만들고, 개발 환경을 설정하는 과정
+모든 작업은 이 폴더 생성하고 여기서 진행
+cd C:\Users\Admin\Documents\GitHub\python_workspace1N\Frontend\React\react_project\myhome_vite
+
+npm create vite@latest 또는 yarn create vite 
+
+아래화면이 나옴 
+npx 
+create-vite 
+# 프로젝트명: myhome_vite
+# React 선택
+# javascript 선택
+
+**만약 _안치면   cd "myhome vite" 이렇게 만들어져서 직접 폴더가서 폴더명 변경
+**C:\Users\Admin\Documents\GitHub\python_workspace1N\Frontend\React\react_project\myhome_vite
+그후 아래 차례로 치기
+cd myhome2_vite
+
+npm install
+npm run dev
+
+폴더에 생성된 App.css파일열어서
+#root {
+  max-width: 1280px;
+  width: 1280px; 이부분 추가
+
+# node_modules 폴더는 용량크니까 계속 지우고
+# pakage.json파일이 가장중요함
+
+# 깔고나면 local링크주소에 리액트 페이지 뜨면 설치완료
+
+https://reactrouter.com/start/declarative/installation
+
+# 라우터 아래 3종 설치
+npm i react-router-dom
+npm install react-bootstrap bootstrap
+npm i axios 
+
+npm install react-quill --legacy-peer-deps # React 19와 호환될 가능성이 높다고 가정하고 설치
+npm install react-quill  # 17,18, 버전만 지원 
+
+# 서버작동해야 돌아감
+npm run dev
+
+
+// cmd에서 서버작동해야 돌아감
+// npm run dev
+// cmd에 표기된 주소로 들어가 ➜  Local:   http://localhost:5173/
+
+// 챕터 1: React 개발 환경 구축하기
+// 1. 프로젝트 폴더로 이동
+// cd C:\Users\Admin\Documents\GitHub\python_workspace1N\Frontend\React\react_project
+
+// 2. 프로젝트 생성 (Vite 사용)
+// Vite라는 도구를 사용해 빠르고 가볍게 React 프로젝트를 만듭니다.
+// npm create vite@latest
+// 이 명령어를 실행하면 몇 가지 질문이 나옵니다.
+// 프로젝트명: myhome_vite
+// 프레임워크: React
+// 언어: JavaScript
+// 이렇게 선택하면 myhome_vite라는 폴더가 만들어지고, 그 안에 React 프로젝트의 기본 파일들이 자동으로 생성됩니다.
+
+// 3. 프로젝트 실행 준비
+// 새로 만든 프로젝트 폴더로 이동한 후, 필요한 패키지들을 설치하고 개발 서버를 실행합니다.
+// cd myhome_vite: 방금 만든 프로젝트 폴더로 이동합니다.
+// npm install: package.json 파일에 있는 모든 필수 라이브러리(예: React, React DOM)를 설치합니다. 이 과정이 완료되어야 프로젝트가 정상적으로 동작합니다.
+// npm run dev: 개발용 서버를 실행합니다. 서버가 켜지면 터미널에 **http://localhost:5173**와 같은 주소가 표시됩니다. 이 주소를 웹 브라우저에 입력하면 현재 프로젝트 화면을 볼 수 있습니다.
+
+// 챕터 2: 추가 라이브러리 설치하기
+// react-router-dom: 웹사이트에서 여러 페이지를 만들고 이동할 때 사용합니다. (예: /about 페이지로 이동)
+// react-bootstrap: 웹사이트를 예쁘게 꾸며주는 Bootstrap CSS 프레임워크를 쉽게 사용할 수 있게 도와줍니다.
+// axios: 백엔드 서버와 데이터를 주고받을 때 fetch보다 더 편리하게 사용할 수 있는 라이브러리입니다.
+// 이 과정은 모두 npm install 또는 npm i 명령어를 통해 진행하며, 터미널에 added ... packages와 found 0 vulnerabilities가 나오면 성공적으로 설치된 것입니다.
+
+# FastAPI와 React 프로젝트를 함께 실행하고 계시는군요. 파일 한 곳만 F5를 누르면 되는 것이 아니라, 백엔드 서버와 프런트엔드 서버를 각각 실행해야 합니다.
+# F5 키는 보통 Visual Studio Code에서 현재 열려 있는 파일을 디버깅 모드로 실행할 때 사용됩니다. 하지만 이 경우에는 두 개의 다른 서버를 켜야 해요.
+# 1. 백엔드 서버 (FastAPI) 실행하기
+# (backend) C:\Users\Admin\Documents\GitHub\python_workspace1N\Backend\fastapi\fastapi_workspaceN>uvicorn main:app --reload
+# FastAPI 서버를 실행하는 터미널에서 uvicorn 명령어를 입력해야 합니다.
+# 위치: FastAPI 프로젝트 폴더 (예: C:\Users\Admin\Documents\GitHub\python_workspace1N\Backend\fastapi\fastapi_workspaceN)
+# 명령어: uvicorn main:app --reload
+# 역할: 이 명령어를 실행하면 localhost:8000에서 백엔드 API가 작동하기 시작합니다.
+
+# 2. 프런트엔드 서버 (React) 실행하기
+# React 개발 서버를 실행하는 터미널에서 npm 명령어를 입력해야 합니다.
+# 위치: React 프로젝트 폴더 (예: C:\Users\Admin\Documents\GitHub\python_workspace1N\Frontend\React\react_project\myhome_vite)
+# 명령어: npm run dev
+# 역할: 이 명령어를 실행하면 localhost:5173에서 React 웹사이트가 실행됩니다.
+
+# 요약하자면, 터미널 창을 두 개 열어서 각각 백엔드와 프런트엔드 서버를 따로 실행해야 합니다. ---
+
+# 실행 순서
+# 터미널 1에서 FastAPI 프로젝트 폴더로 이동한 후, uvicorn main:app --reload를 실행합니다.
+# 터미널 2를 새로 열어 React 프로젝트 폴더로 이동한 후, npm run dev를 실행합니다.
+# 브라우저에서 localhost:5173에 접속하여 프런트엔드 웹사이트를 확인합니다. '성적처리' 링크를 클릭하면 백엔드 서버에서 가져온 데이터가 화면에 표시될 것입니다.
+
+#백엔드-fastAPI의 main.py를 수정하고, FastAPI Sxagger UI 웹에 가서 POST에 score누르고 Try하고 생겨이씨ㅣ는 곳에 이름,성적입력후
+#프론트엔드-Vite+React 웹에 가서 성적처리 클릭하면 추가돼있음.
+
+

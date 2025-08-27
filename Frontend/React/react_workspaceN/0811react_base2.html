@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+</head>
+<body>
+
+<!-- 모든출력은 root 아이디 안에 -->
+    <div id="root"></div>
+
+    <script type="text/babel">
+        let rootNode = document.getElementById("root");
+        //ReactDOM라이브러리와 위에있는 div태그랑 연동하고 모든코드는 React.StrictMode에.
+        // rootNode와 ReactDOM을 연동하고, <React.StrictMode>를 사용하여 개발 환경의 잠재적 문제를 감지합니다.
+        //style태그를 json문법{{}}으로 집어넣고 반드시 변수선언을 해야해서 .StrictMode를 붙이는것임.
+        ReactDOM.createRoot(rootNode).render(
+            <React.StrictMode>
+                <h1 style={{"color":"pink"}}>Hello React2</h1>
+                <p style={{"color":"skyblue"}}>리액트를 배워보자</p>
+                <p>리액트는 프론트엔드 중 하나로써 유연하고 재미있는 라이브러리입니다.</p>
+                <h1>Hello React</h1>
+            
+            </React.StrictMode>
+
+        )
+    </script>
+
+</body>
+</html>

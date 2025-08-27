@@ -1,0 +1,955 @@
+********************
+react를 만든이유 : 카운터.html
+********************
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Parcel Sandbox</title>
+    <meta charset="UTF-8" />
+  </head>
+
+  <body>
+    <h2 id="number">0</h2>
+    <div>
+      <button id="increase">+1</button>
+      <button id="decrease">-1</button>
+    </div>
+  </body>
+</html>
+
+<script>
+    const number = document.getElementById("number");
+    const increase = document.getElementById("increase");
+    const decrease = document.getElementById("decrease");
+
+    increase.onclick = () => {
+        console.log("increase 가 클릭됨");
+        number.innerHTML = parseInt(number.innerHTML)+1;
+    };
+    decrease.onclick = () => {
+        console.log("decrease 가 클릭됨");
+        number.innerHTML = parseInt(number.innerHTML)-1;
+    };
+
+</script>
+
+
+***************************
+첫번째 예제 : hello.html
+***************************
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+      ReactDOM.render(
+        
+        <h1>Hello, world!</h1>,
+        document.getElementById('root')
+      );
+    </script>
+
+</body>
+</html>
+
+***************************
+두번째 예제 : 외부컴포넌트.html
+***************************
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+      ReactDOM.render(
+        <div>
+            <App/>
+        </div>,
+        document.getElementById('root')
+      );
+
+      function App() {
+          const onclick = ()=>{
+              alert("클릭");
+          }
+          return(
+              <div>
+                <h1>Event Processing</h1>
+                <button type="button" onClick={onclick}>클릭</button>
+              </div>
+          )
+      }
+    </script>
+
+</body>
+</html>
+
+
+********************************
+event1.html
+********************************
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+      ReactDOM.render(
+        <div>
+            <h1>Event Processing</h1>
+            <button type="button" onClick={()=>{alert('dddd')}}>클릭</button>
+        </div>,
+        document.getElementById('root')
+      );
+
+    </script>
+
+</body>
+</html>
+
+
+
+********************************
+event2.html
+********************************
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+      ReactDOM.render(
+        <div>
+            <App/>
+        </div>,
+        document.getElementById('root')
+      );
+
+      function App() {
+          return(
+              <div>
+                <h1>Event Processing</h1>
+                <button type="button" onClick={()=>{alert('Hello')}}>클릭</button>
+              </div>
+          )
+      }
+    </script>
+
+</body>
+</html>
+
+********************************
+event3.html
+********************************
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+      ReactDOM.render(
+        <div>
+            <App/>
+        </div>,
+        document.getElementById('root')
+      );
+
+      function App() {
+          const onclick = ()=>{
+              alert("클릭");
+          }
+          return(
+              <div>
+                <h1>Event Processing</h1>
+                <button type="button" onClick={onclick}>클릭</button>
+              </div>
+          )
+      }
+    </script>
+
+</body>
+</html>
+
+******************************************
+counter1.html  :state, useState  사용하기 
+******************************************
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+      ReactDOM.render(
+        <div>
+            <App/>
+        </div>,
+        document.getElementById('root')
+      );
+
+      function App() {
+          const [number, setNumber]=useState(0);
+          const increase = ()=>{
+              setNumber(number+1);
+          }
+          const decrease = ()=>{
+            setNumber(number-1);
+          }
+
+          return(
+              <div>
+                <h1>0</h1>
+                <button type="button" onClick={increase}>+1</button>
+                <button type="button" onClick={decrease}>-1</button>
+              </div>
+          )
+      }
+    </script>
+
+</body>
+</html>
+
+
+****************************
+프로젝트작성하기
+
+1. nodejs 를 설치한다 
+2. create-react-app을 설치해야 한다. 
+
+		npm install -g create-react-app
+
+
+3. 프로젝트 만들기 
+
+프로젝트명 : hello-react 
+create-react-app hello-react
+cd hello-react
+npm install 
+yarn start 
+
+
+1.필요한라이브 설치하기 
+
+1-1. yarn을 사용하기 
+yarn add react-router-dom  // 라우터지원 
+yarn add axios             // ajax 지원 라이브러리   
+yarn add bootstrap         // 부트스트랩 디자인 지원 라이브러리   
+
+1-2 npm 사용하기 
+npm install react-router-dom
+npm install bootstrap
+npm install axios --save
+
+**********************
+filename : index.js 
+**********************
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import App1 from './App1';  // 함수기반 컴포넌트 props 
+import App2 from './App2';
+import App3 from './App3';
+
+import * as serviceWorker from './serviceWorker';
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App/> 
+    <App1/>
+    <App2 />
+    <App3 name="홍길동" age="20" phone="010-0000-0000"/>
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+
+**********************
+filename : app.js 
+**********************
+import React from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+//함수형 컴포넌트 
+function App() {
+  let mystyle={
+    color:'white',
+    backgroundColor:'darkred',
+    padding:'20px 0px 20px 0px'
+  }
+
+  let pStyle={
+    color:'aqua',
+    backgroundColor:'black',
+  }
+
+  return (
+    <div className="App">
+      <header >
+        <h1 className={mystyle}>Hello React</h1>
+        <p>Hi Hello This is React</p>
+      </header>
+    </div>
+  );
+}
+
+export default App;
+
+***************
+app1.js
+***************
+import React from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+//클래스 컴포넌트 - 이전 버전 
+class App1 extends React.Component {
+
+  render(){
+ 
+    return (
+      <div className="App">
+        <h1>클래스를 이용하여 컴포넌트 만들기</h1>
+        <h2>첫번째 태그가 트리구조 하나만 있어야 한다</h2>
+      </div>
+    );
+  }
+}
+
+export default App1;
+
+*****************
+app2.js
+*****************
+import React from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+/*
+//함수형 컴포넌트 
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <h1>Hello React</h1>
+      </header>
+    </div>
+  );
+}
+
+export default App;
+*/
+
+//컴퍼넌트와 컴포넌트간에 값을 전달하고자 할때
+//부모컴포넌트가 자식컴포넌트한게 값을 전달하면 props 객체를 사용한다 
+//무조건 내부에 props 객체가 만들어진다 
+function myfunc(){ //외부함수일 경우에는 이렇게 
+  alert('myfunc');
+}
+
+//클래스 컴포넌트 - 이전 버전 
+class App2 extends React.Component {
+
+  sayHey(){    //내부 함수 선언 
+    alert("hey");
+  }
+
+  render(){
+    //상수 
+    const Data={
+      headTitle:"Welcome react",
+      contentTitle:"react.js is beautiful",
+      contentBody:"It's front end librry"
+    };
+
+    return (
+      <div className="App">
+        <h3 style={{backgroundColor:"darkRed",padding:"10px 10px 10px 10px", color:"white"}}>{Data.headTitle}</h3>
+        <h3 >{Data.contentTitle}</h3>
+        <h3>{Data.contentBody}</h3>
+      </div>
+    );
+  }
+}
+
+export default App2;
+
+
+********************
+app3.js
+********************
+import React from 'react';
+
+
+
+//클래스 컴포넌트 - 이전 버전 
+class App3 extends React.Component {
+   
+  render(){
+   
+    return (
+      <div className="App">
+        <h3>{this.props.name}</h3>
+        <h3>{this.props.age}</h3>
+        <h3>{this.props.phone}</h3>
+      </div>
+    );
+  }
+}
+
+export default App3;
+
+
+
+
+****************************
+
+프로젝트명 : event-demo 
+create-react-app event-demo
+cd event-demo
+npm install 
+yarn start 
+
+************************
+클래스컴포넌트 : app1.js 
+************************
+import React from 'react';
+import './App.css';
+
+class App1 extends React.Component {
+  //생성자 - react에서 생성자를 만들때 주의할점 
+  //생성자의 매개변수로 반드시 props가 와야 한다 
+  //부모생성자를 호출해야 한다 props를 매개변수로 전달한다 
+  constructor(props){
+    super(props);
+
+    //state객체에 count 변수하나를 저장한다 
+    this.state ={count:0, name:""} 
+
+    //함수를 만들고 , bind라는 과정을 거쳐줘야 setState 함수 호출 가능 
+    this.increaseCount = this.increaseCount.bind(this);
+  }
+
+  //카운트값을 증가시킨다 
+  increaseCount(){
+    //일반함수의 경우 bind를 하지 않으면, 클래스 내부의 함수가 아니라서 this를 사용못한다 
+    //그래서 생성자에서 반드시 bind 작업을 해줘야 한다 
+    //원래있던값을 읽어와서 1 더한다음 state객체의 값을 바꾼다 
+    this.setState( {count: this.state.count+1} )
+  }
+
+  //lambda 를 이용할 함수를 사용할 경우 
+  decreaseCount = ()=>{ 
+    this.setState( {count: this.state.count-1} )
+  }
+
+  render(){
+   
+    return (
+      <div className="App">
+        
+        <h3>현재 카운트 : {this.state.count} </h3>
+        <button onClick={this.increaseCount}>증가하기</button>
+        <button onClick={this.decreaseCount}>감소하기</button>
+      </div>
+    );
+  }
+}
+
+export default App1;
+
+
+******************************
+함수 콤포넌트 : app2.js
+******************************
+import React, {useState} from 'react';
+import './App.css';
+
+function  App2()
+{
+    const [count, setCount] = useState(0);
+
+    //카운트값을 증가시킨다 
+    const increaseCount=()=>{
+        setCount( count+1 );
+    }
+
+    //lambda 를 이용할 함수를 사용할 경우 
+    const decreaseCount = ()=>{ 
+        setCount( count-1 );
+    }
+
+    return (
+      <div className="App">
+        
+        <h3>현재 카운트 : {count} </h3>
+        <button onClick={increaseCount}>증가하기</button>
+        <button onClick={decreaseCount}>감소하기</button>
+     </div>
+    );
+}
+
+export default App2;
+
+***************************
+함수콤포넌트 - app3.js 배열
+***************************
+import React, {useState} from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+function  App3()
+{
+   
+    const [fruitList] = useState(["딸기", "사과", "배", "포도"]);
+   
+    return (
+      <div className="App">
+        
+        <h3>과일목록</h3>
+        <table>
+            {
+                fruitList.map( (item)=>{
+                    return (
+                    <tr>
+                        <td>{item}</td>
+                    </tr>
+                    );
+                })
+            }
+        </table>
+        
+     </div>
+    );
+}
+
+export default App3;
+
+
+********************
+함수콤포넌트(Input 태그) -- app4.js  
+********************
+import React, {useState} from 'react';
+import './App.css';
+
+function  App4()
+{
+   
+    const [fruitList, setFruitList] = useState(["딸기", "사과", "배", "포도"]);
+    const [fruit, setFruit] = useState("");
+    const onChange=(e)=>{
+       //console.log( e.target.value);
+        setFruit(e.target.value);
+    }
+
+    const goAppend=()=>{
+        setFruitList( fruitList.concat( fruit )); //push 안먹음  
+        setFruit("");
+        console.log( fruitList );
+    }
+
+    return (
+      <div className="App">
+        
+        <h3>과일목록</h3>
+        <table>
+            <tbody>
+            {
+                fruitList.map( (item, i)=>{
+                    return (
+                        <tr key={i}><td >{item}</td></tr>
+                    );
+                })
+            }
+            </tbody>
+        </table>
+
+        <hr />
+        <input type="text" onChange={onChange} value={fruit} />
+        <button type="button" onClick={goAppend}>추가하기</button>
+     </div>
+    );
+}
+
+export default App4;
+
+
+
+********************
+app5.js (객체배열)
+********************
+import React, {useState, useEffect} from 'react';
+import './App.css';
+
+import React, {useState, useEffect} from 'react';
+import './App.css';
+import Append from './append';
+
+function  App5()
+{
+   const [heroState, setHeroState] = useState(
+      [ {"id":"1", "name":"홍길동1", "description":"11"} ]);
+
+
+   useEffect(() => { 
+      console.log("데이터 불러오기");
+      setHeroState(
+      heroState.concat( 
+       {"id":"2", "name":"임꺽정", "description":"11"} ,
+       {"id":"3", "name":"장길산", "description":"11"} ,
+       {"id":"4", "name":"조승연", "description":"11"},
+       {"id":"5", "name":"전웅", "description":"11"} ,
+       {"id":"6", "name":"강형구", "description":"11"},
+       {"id":"7", "name":"유정", "description":"11"} ,
+       {"id":"8", "name":"박지영", "description":"11"} ));
+   }, []);
+
+   
+     
+     return (
+       <div>
+         <h3 align="center">Hero List</h3>
+         <table className="table table-striped" style={{ marginTop: 20 }}>
+           <thead>
+             <tr>
+               <th>id</th>
+               <th>name</th>
+               <th>description</th>
+             </tr>
+           </thead>
+           <tbody>
+                {
+
+                   heroState.map(function(obj, i){
+                       return (
+                        <tr key={i}>
+                            <td>{obj.id}</td>
+                            <td>{obj.name}</td>
+                            <td>{obj.description}</td>
+                        </tr>
+                       )  
+                   })
+                }                                                               
+           </tbody>
+         </table>
+
+       </div>
+    );
+}
+
+
+
+export default App5;
+
+
+
+***********************
+app6.js
+***********************
+import React, {useState, useEffect} from 'react';
+import './App.css';
+import Append from './append';
+import HeroList from './herolist';
+
+function  App5()
+{
+    const [heroState, setHeroState] = useState(
+          [ {"id":"1", "name":"홍길동1", "description":"11"} ]);
+    
+
+    useEffect(() => { 
+    console.log("데이터 불러오기");
+    setHeroState(
+    heroState.concat( 
+        {"id":"2", "name":"임꺽정", "description":"11"} ,
+        {"id":"3", "name":"장길산", "description":"11"} ,
+        {"id":"4", "name":"조승연", "description":"11"},
+        {"id":"5", "name":"전웅", "description":"11"} ,
+        {"id":"6", "name":"강형구", "description":"11"},
+        {"id":"7", "name":"유정", "description":"11"} ,
+        {"id":"8", "name":"박지영", "description":"11"} ));
+    }, []);
+
+
+    const [id, setId] = useState("");
+    const [name, setName] = useState("홍길동");
+    const [description, setDescription] = useState("설명1");
+
+    const onChangeId=(e)=>{
+        setId(e.target.value);
+    }
+
+    const onChangeName=(e)=>{
+        setName( e.target.value);
+       
+    }
+
+    const onChangeDescription=(e)=>{
+        setDescription( e.target.value );
+    }
+
+    const onAdd = ()=>{
+       
+       
+        setHeroState( heroState.concat({"id":id, "name":name, "description":description}) );
+        console.log( heroState.hero);
+    }
+     return (
+        <div>
+          <Append onAdd={onAdd} id={id} name={name} description={description}
+          onChangeId={onChangeId} onChangeName={onChangeName} onChangeDescription={onChangeDescription}/>
+          
+          <hr />
+          <HeroList heroList = {heroState}/>
+          
+          <button type="button" onClick={onAdd}>추가하기</button>
+        </div>
+     )
+}
+
+
+
+export default App5;
+
+*******************
+append.js
+*******************
+import React, {useState, useEffect} from 'react';
+import './App.css';
+
+
+function Append({ id, name, description, onChangeId, onChangeName, onChangeDescription}){
+
+    return(
+        <div>
+            아이디 : <input type="text" onChange={onChangeId} value={id}/> <br/>
+            이름 : <input type="text" onChange={onChangeName} value={name}/> <br/>
+            설명 : <input type="text" onChange={onChangeDescription} value={description}/> <br/>
+            
+        </div>
+    )
+}
+
+
+export default Append;
+
+
+*******************
+herolist.js
+*******************
+import React, {useState, useEffect} from 'react';
+import './App.css';
+
+
+function HeroList({heroList}){
+    return(
+        <div>
+            <h3 align="center">Hero List</h3>
+            <table className="table table-striped" style={{ marginTop: 20 }}>
+            <thead>
+                <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {
+                    heroList.map(function(obj, i){
+                        return (
+                        <tr key={i}>
+                            <td>{obj.id}</td>
+                            <td>{obj.name}</td>
+                            <td>{obj.description}</td>
+                        </tr>
+                        )  
+                    })
+                }                                                               
+            </tbody>
+        </table>
+        </div>
+    )
+}
+
+
+export default HeroList;
+
+
+
+************************************************
+라우터만들기
+
+참고사이트 : https://react-router.vlpt.us/1/02.html
+
+history 이 객체를 통해 push, replace 를 통해 다른 경로로 이동하거나 앞 뒤 페이지로 전환 할 수 있습니다.
+location 이 객체는 현재 경로에 대한 정보를 지니고 있고 URL 쿼리 (/about?foo=bar 형식) 정보도 가지고있습니다.
+match 이 객체에는 어떤 라우트에 매칭이 되었는지에 대한 정보가 있고 params (/about/:name 형식) 정보를 가지고있습니다
+
+************************************************
+yarn add react-router-dom  // 라우터지원 
+
+프로젝트명 : myapp-router 
+create-react-app myapp-router
+cd myapp-router
+npm install 
+yarn start 
+
+*** filename: index.js 
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from "react-router-dom";
+ReactDOM.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
+  document.getElementById('root')
+);
+
+
+*** filename : app.js
+import * as React from "react";
+import { Routes, Route, Outlet, Link } from "react-router-dom";
+
+export default function App() {
+  return (
+    <div>
+      <h1>Basic Example</h1>
+
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="about" element={<About />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="*" element={<NoMatch />} />
+        </Route>
+      </Routes>
+    </div>
+  );
+}
+
+function Layout() {
+  return (
+    <div>
+      {/* A "layout route" is a good place to put markup you want to
+          share across all the pages on your site, like navigation. */}
+      <nav>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/about">About</Link>
+          </li>
+          <li>
+            <Link to="/dashboard">Dashboard</Link>
+          </li>
+          <li>
+            <Link to="/nothing-here">Nothing Here</Link>
+          </li>
+        </ul>
+      </nav>
+
+      <hr />
+      <Outlet />
+    </div>
+  );
+}
+
+function Home() {
+  return (
+    <div>
+      <h2>Home</h2>
+    </div>
+  );
+}
+
+function About() {
+  return (
+    <div>
+      <h2>About</h2>
+    </div>
+  );
+}
+
+function Dashboard() {
+  return (
+    <div>
+      <h2>Dashboard</h2>
+    </div>
+  );
+}
+
+function NoMatch() {
+  return (
+    <div>
+      <h2>Nothing to see here!</h2>
+      <p>
+        <Link to="/">Go to the home page</Link>
+      </p>
+    </div>
+  );
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+</head>
+<body>
+
+<!-- 모든출력은 root 아이디 안에 -->
+    <div id="root"></div>
+
+    <script type="text/babel">
+        let rootNode = document.getElementById("root");
+
+        // 함수형 컴포넌트 정의
+        let myfunc APP= ()=>{
+            alert("이벤트테스트3")
+        }
+
+        //ReactDOM라이브러리와 위에있는 div태그랑 연동하고 모든코드는 React.StrictMode에
+        ReactDOM.createRoot(rootNode).render(
+            <React.StrictMode>
+                <h1>컴포넌트</h1>
+                <App />
+
+            </React.StrictMode>
+        )
+
+        //컴포넌트 - 부품임. 하나만들어서 여기저기 사용
+        //컴포넌트 간의 데이터 주고받아야하는데, class만 가능했었음
+        //class기반 컴포넌트(이전)=>훅이 생성되면서 함수기반 컴포넌트도 데이터공유 가능해지면서
+        //현재는 class기반 컴포넌트 거의 안쓰고 대부분 훅과 함수기반 컴포넌트 사용한다.
+        //훅 - 기본 데이터흐름에 우리 프로그램이 끼어들어 뭔가 가로채서 프로그래밍
+
+        //반드시트리구조:return구문 뒤에 html템플릿 두는데 일렬로 쓰면 오류
+        //나열필요하면 별도의 div태그 등을 사용해서 강제로 트리구조 만들어야함
+        //함수안에 함수 생성가능 람다로.const
+        function App(){
+            const onClick = ()=>{
+                alert("람다로");
+            }
+            let name="홍길동"; //함수내 변수선언되면 함수호출시 메모리잡히고 함수종소리 변수사라짐
+            //state -> 상태정보 저장
+            //가상dom이 저 state감시하다가 state값 바뀌면 그부분의 값 바꿔줌
+            //state가 초창기에는 class기반컴퍼넌트에만 존재함
+            //초창기에도 class기반,함수기반 컴퍼넌트 둘다 존재
+            //state(자기정보), props(부모컴포넌트가 자식컴포넌트한테 값전달하기 위한 목적)
+            //state, props를 class기반만. 그래서 
+            return(
+                <div>
+                    <h1>첫번째컴퍼넌트</h1>
+                    <button type="button" onClick={() => alert("이벤트발생")}>클릭</button>
+                    <button type="button" onClick={onClick}>클릭2</button>
+
+                </div>
+            )
+        }
+
+    </script>
+
+</body>
+</html>

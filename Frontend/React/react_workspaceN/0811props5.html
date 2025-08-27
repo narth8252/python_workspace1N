@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+</head>
+<body>
+
+<!-- 모든출력은 root 아이디 안에 -->
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState } = React; 
+        let rootNode = document.getElementById("root");
+        ReactDOM.createRoot(rootNode).render(
+            <React.StrictMode>
+                <h1>Hello React</h1>  
+                <App />          
+            </React.StrictMode>
+        )
+
+        function App(){
+            const [arr, setArr] = useState(["자두","앵두","살구"]);
+            const [fruit, setFruit] = useState([]);
+            const focusMove = React.useRef(null); //포커스처리용
+
+            const fruitChange =(e)=>{ setFruit(e.target.value) }
+            const append=()=>{
+                console.log("추가");
+                //원래배열 추가함수는 push(),
+                //여기는 못써서 전개나 concat함수 사용
+                //새배열로 만들어서 교체방식(어찌됐든 push사용불가)
+                // setArr([...arr, fruit]) //...이 전개문법임. 이코딩 혹은 아래코딩
+                if (fruit!="")
+                {
+                setArr(arr.concat(fruit));
+                setFruit("");
+                }
+            } 
+            return(
+                <div>
+                    <h1>배열처리</h1>
+                        과일 : <input type="text" ref={focusMove} value={fruit}
+                            onChange={fruitChange} /> <br/>
+                    <button type="button" onClick={append}>추가</button>
+                    <hr/>
+                    {/*주석
+                        if나 for문 사용불가
+                        map((obj, index)=>반환하는 람다) */}
+                    <ul>
+                        {arr.map((item, index)=>{
+                            return(
+                                <li key={index}>{item}</li>
+                        )})}
+                        </ul>
+                </div>
+            );
+        }
+    </script>
+
+</body>
+</html>

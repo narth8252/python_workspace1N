@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX with React</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<!-- .then (response => response. json ( ) )
+.then(json => console.log(json)) -->
+<!--250812 am9시 fetch: React를 활용해 외부 API에서 데이터를 가져와 화면에 표시하는 방법 -->
+<!-- 가짜 백엔드 서버(jsonplaceholder)**에서 할 일 목록(To-Do List) 데이터를 가져와 웹페이지에 보여주는 역할을 해요.
+코드를 크게 세 부분으로 나누어 설명할 수 있어요.
+<head> React와 Babel 라이브러리를 불러옵니다.
+<body> 실제 React 코드가 작성되는 곳.
+<script> HTML과 연동되어 React 컴포넌트를 렌더링. -->
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState } = React; 
+        let rootNode = document.getElementById("root");
+        ReactDOM.createRoot(rootNode).render(
+            <React.StrictMode>
+                <h1>Todo List (AJAX)</h1>  
+                <App />          
+            </React.StrictMode>)
+
+        //ajax로 백앤드 서버로부터 데이터불러오기
+        //mock서버 jsonplaceholder사이트, json서버라는 프로그램을 가동시키고, json파일을 만들어서
+        //던져주면 백앤드 서버처럼 동작을 한다.
+        //https://jsonplaceholder.typicode.com/
+        //https://axios-http.com/docs/intro
+        // App 컴포넌트
+        function App(){
+            const [userList, setUserList] = React.useState([]);
+            const [isLoading, setIsLoading] = React.useState(true);
+
+            //fetch 가 됐든 axios가 됐든 비동기통신임=>동기통신으로 바꾸고싶을때
+            //비동기로 데이터받으면 반드시 then구문에서 처리
+            //반환값 사용하고자 할때, 비동기=>동기통신으로 바꾸는 코드
+            async function loadData() {
+                setIsLoading(true);    
+                let url = "https://jsonplaceholder.typicode.com/users";
+                let result = await axios.get(url);
+                setUserList(result.data); 
+                //axios가 데이터 받아올때마다 data항목에 담아옴
+                setIsLoading(false);                    
+            }
+
+        //window.onload=> DOM구조 완성후 이벤트발생 => $(document),.ready
+        //useEffect 사용해 컴포넌트가 첫렌더링될 때만 loadData 함수 호출 => onunload-unmount, 화면이 refresh 돼야할때 3번호출
+        //두개의 매개변수: 1st매개변수(전체 DOM에 무슨일생기면 호출될 함수), 
+        //2nd매개변수`[]`:(내가 감시할 대상)컴포넌트가 처음 렌더링될 때만 loadData 함수를 호출하라는 의미
+            React.useEffect(()=>{loadData();}, [])
+
+            //return 문 안에 들어가는 문장이 JSX문법이라 if나 for문 사용불가
+            return(
+                <div>
+                    {/* 삼항 연산자를 사용하여 조건부 렌더링을 구현합니다. */}
+                    {isLoading ? 
+                        <p>데이터 로딩중</p>:
+                        <ul>
+                            {userList.map((item, i)=>{
+                                return(
+                                    <li key={i}>{item.id} {item.name} {item.username} {item.email}</li>
+                                )
+                            })}
+                        </ul>
+                    }
+                </div>
+            )
+        }
+    </script>
+</body>
+</html>

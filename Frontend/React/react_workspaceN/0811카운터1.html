@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!--JavaScript를 사용한 카운터 기능-->
+    <!--JavaScript를 사용해서 HTML의 요소를 직접 제어하는 방식을 DOM(Document Object Model) 조작-->
+    <h2 id = "number">0</h2>
+    <div>
+        <button type = "button" id= "increase">+1</button>
+        <button type = "button" id= "decrease">-1</button>
+    </div>
+
+    <script>
+        const number = document.getElementById("number")
+        const increase = document.getElementById("increase")
+        const decrease = document.getElementById("decrease")
+
+        increase.onclick=()=>{
+            console.log("increase가 호출됨");
+            number.innerHTML = parseInt(number.innerHTML)+1;
+        };
+        decrease.onclick=()=>{
+            console.log("decrease가 호출됨");
+            number.innerHTML = parseInt(number.innerHTML)-1;
+        };
+
+    </script>
+</body>
+</html>
